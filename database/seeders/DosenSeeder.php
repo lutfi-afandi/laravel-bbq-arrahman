@@ -13,6 +13,8 @@ class DosenSeeder extends Seeder
      */
     public function run(): void
     {
+        // DB::table('dosens')->truncate();
+
         DB::table('dosens')->insert([
             ['nama' => 'M. Asgaff Aznan Siregar, S.H, M.H'],
         ]);

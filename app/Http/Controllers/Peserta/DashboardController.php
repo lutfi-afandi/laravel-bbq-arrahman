@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jadwal;
+use App\Models\Kelompok;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -12,8 +16,25 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $title = 'Dashboard peserta';
+        $mahasiswa = Mahasiswa::with('kelompok')->where('npm', Auth::user()->username)->first();
 
-        echo " Hay Peserta";
+        $jadwalId = $mahasiswa->kelompok?->jadwal->id;
+        $jadwal = Jadwal::with('tutor', 'gelombang', 'waktu', 'kelompok.mahasiswa')
+            ->where('id', $jadwalId)->first();
+
+        $mahasiswas = Mahasiswa::whereHas('kelompok', function ($query) use ($jadwalId) {
+            $query->where('jadwal_id', $jadwalId);
+        })->get();
+
+        // dd($jadwal, $mahasiswas[0]->kelompok);
+
+        return view('peserta.dashboard.index', compact(
+            'title',
+            'mahasiswa',
+            'jadwal',
+            'mahasiswas',
+        ));
     }
 
     /**

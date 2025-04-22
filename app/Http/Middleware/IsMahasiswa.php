@@ -16,7 +16,7 @@ class IsMahasiswa
     public function handle(Request $request, Closure $next): Response
     {
         if (
-            !auth()->check() || auth()->user()->level !== 'mahasiswa'
+            !auth()->check() || auth()->user()->role !== 'mahasiswa'
         ) {
             return redirect()->route('login');
         }

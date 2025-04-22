@@ -40,7 +40,8 @@ return new class extends Migration
             $table->integer('tilawah')->nullable();
             $table->integer('uas_tertulis')->nullable();
             $table->double('nilai_akhir')->nullable();
-            $table->char('huruf_mutu');
+            $table->char('huruf_mutu')->nullable();
+            $table->dateTime('updated_nilai')->nullable();
             $table->timestamps();
         });
     }

@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Kelompok extends Model
 {
     use HasFactory;
-    protected $guarded = 'id';
+    protected $guarded = ['id'];
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class);
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class);
+    }
 }

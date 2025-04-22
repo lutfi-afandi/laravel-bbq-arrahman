@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Pendaftaran;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,19 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'welcome']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('/dashboard', HomeController::class)->middleware(['auth'])->names('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::get('/perbarui-password', [HomeController::class, 'perbarui_password'])->middleware(['auth'])->name('perbarui_password');
+Route::post('/perbarui-password/updatepw', [HomeController::class, 'updatepw'])->middleware(['auth'])->name('perbaruipassword_new');
+
+Route::resource('/pendaftaran', Pendaftaran::class)->names('pendaftaran');
+Route::get('/pendaftaran-lihat', [Pendaftaran::class, 'lihat'])->name('pendaftaran.lihat');
 
 require __DIR__ . '/admin.php';
 require __DIR__ . '/auth.php';

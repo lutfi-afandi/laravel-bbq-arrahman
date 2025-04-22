@@ -24,7 +24,7 @@ class User extends Authenticatable
         'username',
         'role',
         'jenis_kelamin',
-        'no_wa,'
+        'no_wa',
     ];
 
     /**

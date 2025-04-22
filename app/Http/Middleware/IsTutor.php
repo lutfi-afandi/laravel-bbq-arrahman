@@ -16,7 +16,7 @@ class IsTutor
     public function handle(Request $request, Closure $next): Response
     {
         if (
-            !auth()->check() || auth()->user()->level !== 'tutor'
+            !auth()->check() || auth()->user()->role !== 'tutor'
         ) {
             return redirect()->route('login');
         }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Jurusans;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class JurusanSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class JurusanSeeder extends Seeder
      */
     public function run(): void
     {
+        // DB::table('jurusans')->truncate();
+
         $jurusans = [
             ['kode' => 'Sasing', 'nama' => 'Sastra Inggris'],
             ['kode' => 'PMat', 'nama' => 'Pendidikan Matematika'],
@@ -30,7 +33,7 @@ class JurusanSeeder extends Seeder
         ];
 
         foreach ($jurusans as $jurusan) {
-            Jurusans::create($jurusan);
+            Jurusans::firstOrCreate(['kode' => $jurusan['kode']], $jurusan);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Gelombang;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GelombangSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class GelombangSeeder extends Seeder
      */
     public function run(): void
     {
+        // DB::table('gelombangs')->truncate();
+
         $tahunAkademik = [
             '2021/2022',
             '2022/2023',

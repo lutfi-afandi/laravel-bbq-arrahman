@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tutors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('username')->unique();
+            $table->string('name');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('no_wa')->nullable();
             $table->string('password');

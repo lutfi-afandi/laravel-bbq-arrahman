@@ -18,8 +18,12 @@
     <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
 </head>
 
+@php
+    $cover = asset('img/cover.png');
+@endphp
+
 <body class="hold-transition login-page"
-    style="background: url('https://images.squarespace-cdn.com/content/v1/651a86a59e2bad06fee181e5/1700758376658-GG8IAY4A51S1Y2BZJ5B9/Dark+halftone.png?format=2500w');
+    style="background: url('{{ $cover }}');  background-repeat: no-repeat;
             background-size: cover;">
     <div class="login-box">
 
