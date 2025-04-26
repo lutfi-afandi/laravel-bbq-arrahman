@@ -28,13 +28,14 @@
 @endsection
 @section('content')
     <div class="card card-default">
-        <div class="card-header bg-info">
+        <div class="card-header bg-navy">
             <h3 class="card-title">
                 <i class="fas fa-flag-checkered"></i>
                 Laporan Tutor : {{ $tutor->name }}
             </h3>
             <div class="card-tools">
-                <a href="" class="btn btn-warning btn-sm"><i class="fas fa-plus"></i> add</a>
+                <a href="{{ route('tutor.laporan.create') }}" class="btn btn-warning btn-sm"><i class="fas fa-plus"></i>
+                    add</a>
             </div>
         </div>
         <div class="card-body">
@@ -62,14 +63,15 @@
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <td>{{ $laporan->jadwal->waktu->hari }} - {{ $laporan->jadwal->waktu->jam }}</td>
-                                <td>1</td>
-                                <td>Thursday, 13 March 2025</td>
-                                <td>13</td>
-                                <td>10</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>konthjkmkk</td>
-                                <td>prak</td>
+                                <td>{{ $laporan->no_pertemuan }}</td>
+                                <td>{{ indoDateFull($laporan->tanggal) }}</td>
+                                <td>{{ $laporan->jumlah_peserta }}</td>
+                                <td>{{ $laporan->hadir }}</td>
+                                <td>{{ $laporan->izin }}</td>
+                                <td>{{ $laporan->absen }}</td>
+                                <td>{{ $laporan->materi }}</td>
+                                <td>{{ $laporan->keterangan }}</td>
+
                                 <td>
                                     <a class="btn btn-xs btn-warning" target="_blank"
                                         href="https://bbq.arrahmanteknokrat.or.id/assets/uploads/laporan/LaporanGelombang-3-095112-70.jpg"><i
@@ -77,9 +79,15 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger btn-xs" onclick="konfimasi('5')" title="Hapus Data"><i
-                                            class="fa fa-trash"></i>
-                                    </a>
+                                    <form action="{{ route('tutor.laporan.destroy', $laporan->id) }}" method="POST"
+                                        class="form-delete d-inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-xs btn-delete-laporan"
+                                            data-id="{{ $laporan->id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -97,6 +105,49 @@
         $(function() {
             $('#data-table').DataTable()
 
+
         })
+
+        $('.btn-delete-laporan').click(function(e) {
+            e.preventDefault();
+            let form = $(this).closest('form'); // Ambil form terkait
+            let id = $(this).data('id'); // Ambil ID dari tombol
+
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data ini akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Jika dikonfirmasi, submit form
+                }
+            })
+        });
     </script>
+
+    @if (session('toast_icon'))
+        <script>
+            Toast.fire({
+                icon: "{{ session('toast_icon') }}",
+                title: "{{ session('toast_title') }}",
+            });
+        </script>
+    @endif
+
+    @if (session('swal_icon'))
+        <script>
+            Swal.fire({
+                icon: "{{ session('swal_icon') }}",
+                title: "{{ session('swal_title') }}",
+                text: "{{ session('swal_text') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 @endpush

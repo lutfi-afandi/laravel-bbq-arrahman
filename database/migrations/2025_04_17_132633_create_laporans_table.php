@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('izin');
             $table->integer('absen');
             $table->text('materi');
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->string('foto', 255)->nullable();
 
             $table->timestamps();
