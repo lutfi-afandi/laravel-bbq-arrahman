@@ -18,7 +18,7 @@ class HomeController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if (Auth::user()->role == 'admin') {
-            return $this->isAdmin();
+            return redirect()->route('admin.dashboard.index');
         } else if (Auth::user()->role == 'tutor') {
             return redirect()->route('tutor.dashboard.index');
         } else {

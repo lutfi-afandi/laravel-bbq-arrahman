@@ -70,6 +70,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/admin/cetak" class="nav-link  {{ request()->is('admin/cetak') ? 'active' : '' }}">
+                            <i class="fa fa-print nav-icon"></i>
+                            <p>Cetak Report</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('admin.informasi.index') }}"
                             class="nav-link  {{ request()->is('admin/informasi') ? 'active' : '' }}">
                             <i class="fa fa-info-circle nav-icon"></i>
@@ -84,12 +90,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#'Admin/Laporan" class="nav-link">
+                        <a href="{{ route('admin.laporan.index') }}"
+                            class="nav-link {{ request()->is('admin/laporan') ? 'active' : '' }}">
                             <i class="fa fa-list nav-icon"></i>
                             <p>Laporan KBM</p>
                         </a>
                     </li>
-                    </li>
+
 
                     <li class="nav-header">User</li>
                     <li class="nav-item">

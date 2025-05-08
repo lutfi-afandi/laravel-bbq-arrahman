@@ -32,6 +32,7 @@
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('template_lte/plugins/daterangepicker/daterangepicker.css') }}">
 
+    @stack('css')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -45,8 +46,10 @@
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>
+
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+
                 <!-- Messages Dropdown Menu -->
                 @if (Auth::user())
                     <li class="nav-item">
@@ -92,6 +95,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
+
                 @yield('content-header')
             </section>
 

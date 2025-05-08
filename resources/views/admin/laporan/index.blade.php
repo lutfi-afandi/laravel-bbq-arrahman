@@ -31,12 +31,9 @@
         <div class="card-header bg-navy">
             <h3 class="card-title">
                 <i class="fas fa-flag-checkered"></i>
-                Laporan Tutor : {{ $tutor->name }}
+                Laporan Kegiatan BBQ
             </h3>
-            <div class="card-tools">
-                <a href="{{ route('tutor.laporan.create') }}" class="btn btn-warning btn-sm"><i class="fas fa-plus"></i>
-                    add</a>
-            </div>
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -45,7 +42,7 @@
                     <thead class="bg-gradient-success">
                         <tr>
                             <th class="text-center">#</th>
-                            <th>Hari</th>
+                            <th>Kelompok</th>
                             <th>Pertemuan Ke</th>
                             <th>Tanggal </th>
                             <th>Peserta</th>
@@ -62,7 +59,10 @@
                         @foreach ($laporans as $laporan)
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
-                                <td>{{ $laporan->jadwal->waktu->hari }} - {{ $laporan->jadwal->waktu->jam }}</td>
+                                <td> <span class="text-primary font-weight-bold">{{ $laporan->jadwal->tutor->name }}</span>
+                                    <span class="font-italic"> - [{{ $laporan->jadwal->waktu->hari }},
+                                        {{ $laporan->jadwal->waktu->jam }}]</span>
+                                </td>
                                 <td>{{ $laporan->no_pertemuan }}</td>
                                 <td>{{ indoDateFull($laporan->tanggal) }}</td>
                                 <td>{{ $laporan->jumlah_peserta }}</td>

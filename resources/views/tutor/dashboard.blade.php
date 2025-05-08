@@ -1,5 +1,12 @@
 @extends('template.main')
 @section('content-header')
+    <marquee behavior="Scroll " direction="left" scrollamount="10">
+        <p class="ml-auto ml-md-3 my-2 my-md-0 text-danger font-italic">Selamat Datang {{ auth()->user()->name }} - Sistem
+            Informasi Bimbingan
+            Belajar Qur'an Teknokrat. Dikelola Oleh Unit Kegiatan Mahasiswa Islam
+        </p>
+    </marquee>
+
     <form action="" class="row">
         @csrf
         <span class="mt-1 ml-2">Gelombang</span>

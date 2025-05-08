@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\CetakController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InformasiController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\KelompokController;
+use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\PesertaController;
 use App\Http\Controllers\Admin\TutorController;
 use App\Http\Controllers\Admin\UserController;
@@ -40,7 +42,15 @@ Route::middleware(['is_admin'])->group(function () {
   Route::put('/admin/user-reset/{user}', [UserController::class, 'reset'])->name('admin.user.reset');
   Route::resource('/admin/user', UserController::class)->names('admin.user');
 
+  Route::get('/admin/dashboard/grafikJk', [DashboardController::class, 'grafikJk']);
+  Route::get('/admin/dashboard/grafikJurusan', [DashboardController::class, 'grafikJurusan']);
   Route::resource('/admin/dashboard', DashboardController::class)->names('admin.dashboard');
+  Route::resource('/admin/laporan', LaporanController::class)->names('admin.laporan');
+
+  Route::get('/admin/cetak', [CetakController::class, 'index'])->name('admin.cetak.index');
+  Route::get('/admin/exportMahasiswa', [CetakController::class, 'exportMahasiswa']);
+  Route::get('/admin/exportKelompok', [CetakController::class, 'exportKelompok']);
+  Route::get('/admin/exportTutor', [CetakController::class, 'exportTutor']);
 });
 
 

@@ -10,6 +10,7 @@ use App\Models\Laporan;
 use App\Models\Tutor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class LaporanController extends Controller
@@ -28,6 +29,9 @@ class LaporanController extends Controller
 
         $laporans = Laporan::with('gelombang', 'jadwal')
             ->where('gelombang_id', $informasi->gelombang_id)
+            ->whereHas('jadwal', function ($query) use ($tutor) {
+                $query->where('tutor_id', $tutor->id);
+            })
             ->orderBy('id', 'DESC')
             ->get();
 
@@ -35,6 +39,9 @@ class LaporanController extends Controller
             $gelombang_selected = Gelombang::where('nomor', $request->nomor)->where('tahun_akademik', $request->ta)->first();
             $laporans = Laporan::with('gelombang', 'jadwal')
                 ->where('gelombang_id', $gelombang_selected->id)
+                ->whereHas('jadwal', function ($query) use ($tutor) {
+                    $query->where('tutor_id', $tutor->id);
+                })
                 ->orderBy('id', 'DESC')
                 ->get();
         }
@@ -138,6 +145,9 @@ class LaporanController extends Controller
     public function destroy(string $id)
     {
         $laporan  = Laporan::findOrFail($id);
+        if ($laporan->foto) {
+            Storage::delete('public/' . $laporan->foto);
+        }
         $laporan->delete();
 
         toast_notif('success', 'Laporan telah dihapus');
