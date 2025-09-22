@@ -30,8 +30,8 @@
         <div class="card card-outline card-navy p-2">
             <div class="card-body bg-gray-light">
 
-                <div class="login-logo">
-                    <img src="https://bbq.arrahmanteknokrat.or.id/template/img/logo.png" alt="" width="50px">
+                <div class="login-logo mb-0">
+                    <img src="{{ asset('img/logo.png') }}" alt="" width="80px">
                 </div>
             </div>
             <div class="card-body ">

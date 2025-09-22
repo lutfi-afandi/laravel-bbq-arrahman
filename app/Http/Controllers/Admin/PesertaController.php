@@ -57,6 +57,7 @@ class PesertaController extends Controller
     public function create() {}
     public function store(Request $request) {}
     public function show(string $id) {}
+
     public function edit(string $id) {}
 
     public function update(Request $request, string $id)
@@ -64,6 +65,7 @@ class PesertaController extends Controller
         $mahasiswa = Mahasiswa::findOrFail($id);
         $user = User::where('username', $mahasiswa->npm)->first();
 
+        // dd($mahasiswa, $user);
         DB::beginTransaction();
         try {
             $mahasiswa->password = Hash::make($request->password);
@@ -75,9 +77,9 @@ class PesertaController extends Controller
             toast_notif('success', 'Password telah di-Reset!');
             return redirect()->back();
         } catch (\Throwable $th) {
+            // dd($th);
             toast_notif('error', 'terjadi kesalahan!');
             return redirect()->back();
-            //throw $th;
         }
     }
 

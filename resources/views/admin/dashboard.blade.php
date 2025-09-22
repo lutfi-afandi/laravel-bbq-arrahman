@@ -2,7 +2,7 @@
 
 @section('content-header')
     <marquee behavior="Scroll " direction="left" scrollamount="10">
-        <p class="ml-auto ml-md-3 my-2 my-md-0 text-danger font-italic">Selamat Datang {{ auth()->user()->name }} - Sistem
+        <p class="ml-auto ml-md-3 my-2 my-md-0 text-success font-italic">Selamat Datang {{ auth()->user()->name }} - Sistem
             Informasi Bimbingan
             Belajar Qur'an Teknokrat. Dikelola Oleh Unit Kegiatan Mahasiswa Islam
         </p>
@@ -305,6 +305,11 @@
             const dataJurusan = JSON.parse(jumlahInputJurusan.value);
             const chartJurusan = canvasInputJurusan.getContext('2d');
 
+            // cari nilai maksimum dari data
+            var maxData = Math.max(...dataJurusan);
+
+            // biar ada ruang kosong di atas bar, naikkan sedikit, misalnya dibulatkan ke atas ke kelipatan 5
+            var yMax = Math.ceil((maxData + 1) / 5) * 5;
             if (barChart) barChart.destroy();
 
             barChart = new Chart(chartJurusan, {
@@ -327,7 +332,8 @@
                                 beginAtZero: true,
                                 min: 0, // ⬅ tambahkan ini untuk pastikan mulai dari 0
                                 // max: 5, // opsional kalau mau paksa batas atas
-                                stepSize: 1 // opsional: supaya jaraknya enak
+                                max: yMax,
+                                // stepSize: 1 // opsional: supaya jaraknya enak
                             }
                         }]
                     }

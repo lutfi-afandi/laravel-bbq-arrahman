@@ -130,21 +130,13 @@
                                 <tr class="text-center {{ $mahasiswa->id == $mhs->id ? 'table-success' : '' }}">
                                     <td>{{ $mhs->npm }}</td>
                                     <td class="text-left ">{{ $mhs->nama }} </td>
-                                    <td>
-                                        <i
-                                            class="fa {{ icon($mhs->kelompok->p1)['icon'] }} text-{{ icon($mhs->kelompok->p1)['text'] }}"></i>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <td>
+                                            <i
+                                                class="fa {{ icon($mhs->kelompok->{'p' . $i})['icon'] }} text-{{ icon($mhs->kelompok->{'p' . $i})['text'] }}"></i>
+                                        </td>
+                                    @endfor
+
                                 </tr>
                             @endforeach
                         </tbody>

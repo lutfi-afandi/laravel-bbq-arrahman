@@ -254,8 +254,20 @@
                                     <h5 class="card-title">
                                         <h4>{{ $kegiatan->nama_kegiatan }}</h4>
                                     </h5>
-                                    <p class="card-text">{{ $kegiatan->deskripsi }}</p>
+                                    <p class="card-text">
+                                        {{-- teks pendek --}}
+                                        <span class="short-text">
+                                            {{ Str::limit($kegiatan->deskripsi, 100, '...') }}
+                                        </span>
 
+                                        {{-- teks full, disembunyikan dulu --}}
+                                        <span class="full-text d-none">
+                                            {{ $kegiatan->deskripsi }}
+                                        </span>
+                                    </p>
+                                    <a href="javascript:void(0)" class="toggle-text btn btn-link p-0">
+                                        Baca lengkap
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -369,6 +381,23 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
+    </script>
+    <script>
+        $(document).on('click', '.toggle-text', function() {
+            let cardBody = $(this).closest('.card-body');
+            let shortText = cardBody.find('.short-text');
+            let fullText = cardBody.find('.full-text');
+
+            shortText.toggleClass('d-none');
+            fullText.toggleClass('d-none');
+
+            // Ganti teks tombol
+            if ($(this).text() === "Baca lengkap") {
+                $(this).text("Tutup");
+            } else {
+                $(this).text("Baca lengkap");
+            }
+        });
     </script>
 </body>
 

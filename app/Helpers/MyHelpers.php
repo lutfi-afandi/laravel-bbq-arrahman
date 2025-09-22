@@ -49,8 +49,11 @@ if (!function_exists('icon')) {
     } elseif ($p == '2') {
       $icon = 'fa-info-circle';
       $text = 'primary';
-    } else {
+    } elseif ($p == '0') {
       $icon = 'fa-times-circle';
+      $text = 'danger';
+    } else {
+      $icon = 'fa-';
       $text = 'danger';
     }
 
