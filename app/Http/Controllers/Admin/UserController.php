@@ -178,7 +178,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            swal_notif('success', 'Gagal', 'Password telah di-Reset!');
+            swal_notif('success', 'Berhasil', 'Password telah di-Reset!');
             return redirect()->back();
         } catch (\Throwable $th) {
             swal_notif('error', 'Gagal', 'terjadi kesalahan! ' . $th);
