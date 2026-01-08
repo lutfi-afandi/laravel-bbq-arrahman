@@ -106,17 +106,19 @@ php artisan serve
 
 10. **Akses aplikasi di browser:**
 
-````bash
-http://127.0.0.1:8000```
+```bash
+http://127.0.0.1:8000
+```
 
 🔗 Route & Endpoint Utama
-- `/login` → Login user
-- `/logout` → Logout
-- `/pendaftaran` → List dan pendaftaran peserta
-- `/pendaftaran/create` → Form pendaftaran
-- `/admin/dashboard` → Dashboard admin
-- `/tutor/dashboard` → Dashboard tutor
-- `/peserta/dashboard` → Dashboard peserta
+
+-   `/login` → Login user
+-   `/logout` → Logout
+-   `/pendaftaran` → List dan pendaftaran peserta
+-   `/pendaftaran/create` → Form pendaftaran
+-   `/admin/dashboard` → Dashboard admin
+-   `/tutor/dashboard` → Dashboard tutor
+-   `/peserta/dashboard` → Dashboard peserta
 
 Semua route dilindungi middleware sesuai role masing-masing.
 
@@ -130,3 +132,6 @@ Aplikasi ini berbasis Web, bukan REST API, sehingga interaksi dilakukan melalui 
 📌 Lisensi
 Project ini dibuat untuk kebutuhan internal/pembelajaran. Silakan disesuaikan dengan kebutuhan masing-masing.
 
+```
+
+```
