@@ -30,9 +30,6 @@
 **Alur request:**  
 Request → Route → Controller → Model → View → Response
 
-yaml
-Copy code
-
 ---
 
 ## ⚙️ Instalasi & Menjalankan Project
@@ -50,72 +47,76 @@ Copy code
 
 ```bash
 cd laravel-bbq-new
-Install dependency PHP
+```
 
-bash
-Copy code
+2. **Install dependency PHP**
+
+```bash
 composer install
-Install dependency frontend
+```
 
-bash
-Copy code
+3. **Install dependency frontend**
+
+```bash
 npm install
 npm run build
-Copy file environment
+```
 
-bash
-Copy code
+4. **Copy file environment**
+
+```bash
 cp .env.example .env
-Generate application key
+```
 
-bash
-Copy code
+5. **Generate application key**
+
+```bash
 php artisan key:generate
-Konfigurasi database
-Edit file .env:
+```
 
-env
-Copy code
+6. **Konfigurasi database**
+   Edit file `.env`:
+
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=nama_database
 DB_USERNAME=username
 DB_PASSWORD=password
-Migrasi database
+```
 
-bash
-Copy code
+7. **Migrasi database**
+
+```bash
 php artisan migrate
-(Opsional) Seed database
+```
 
-bash
-Copy code
+8. **(Opsional) Seed database**
+
+```bash
 php artisan db:seed
-Jalankan server
+```
 
-bash
-Copy code
+9. **Jalankan server**
+
+```bash
 php artisan serve
-Akses aplikasi di browser:
+```
 
-cpp
-Copy code
-http://127.0.0.1:8000
+10. **Akses aplikasi di browser:**
+
+````bash
+http://127.0.0.1:8000```
+
 🔗 Route & Endpoint Utama
-/login → Login user
-
-/logout → Logout
-
-/pendaftaran → List dan pendaftaran peserta
-
-/pendaftaran/create → Form pendaftaran
-
-/admin/dashboard → Dashboard admin
-
-/tutor/dashboard → Dashboard tutor
-
-/peserta/dashboard → Dashboard peserta
+- `/login` → Login user
+- `/logout` → Logout
+- `/pendaftaran` → List dan pendaftaran peserta
+- `/pendaftaran/create` → Form pendaftaran
+- `/admin/dashboard` → Dashboard admin
+- `/tutor/dashboard` → Dashboard tutor
+- `/peserta/dashboard` → Dashboard peserta
 
 Semua route dilindungi middleware sesuai role masing-masing.
 
@@ -128,4 +129,4 @@ Aplikasi ini berbasis Web, bukan REST API, sehingga interaksi dilakukan melalui 
 
 📌 Lisensi
 Project ini dibuat untuk kebutuhan internal/pembelajaran. Silakan disesuaikan dengan kebutuhan masing-masing.
-```
+
