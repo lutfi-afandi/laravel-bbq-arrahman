@@ -24,39 +24,39 @@ class KegiatanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_kegiatan' => 'required',
-            'deskripsi' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024', // Validasi file gambar
+        $validated = $request->validate([
+            'nama_kegiatan' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,webp|max:1024',
         ]);
 
-        // Ambil data kegiatan berdasarkan ID
-        $kegiatan = new Kegiatan();
-
         DB::beginTransaction();
-        try {
-            // Simpan foto baru
-            $file = $request->file('foto');
-            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate nama_kegiatan unik
-            $file->storeAs('public/kegiatan', $fileName); // Simpan ke storage
 
-            // Update database
-            $kegiatan->foto = $fileName;
-            $kegiatan->nama_kegiatan = $request->nama_kegiatan;
-            $kegiatan->deskripsi = $request->deskripsi;
-            $kegiatan->save();
+        try {
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/kegiatan', $fileName);
+
+            Kegiatan::create([
+                'nama_kegiatan' => $validated['nama_kegiatan'],
+                'deskripsi' => $validated['deskripsi'],
+                'foto' => $fileName,
+            ]);
 
             DB::commit();
 
             swal_notif('success', 'Berhasil', 'Kegiatan telah ditambah!');
             return back();
         } catch (\Throwable $th) {
-            // throw $th;
+            DB::rollBack();
 
-            swal_notif('error', 'Gagal', 'Terjadi kesalahan!');
+            report($th); // logging profesional
+
+            swal_notif('error', 'Gagal', 'Terjadi kesalahan sistem!');
             return back();
         }
     }
+
 
     public function show(string $id) {}
     public function edit(string $id) {}

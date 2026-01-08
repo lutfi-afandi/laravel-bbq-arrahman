@@ -34,8 +34,10 @@
                                         <td>{{ Str::words($kegiatan->deskripsi, 30, '...') }}</td>
                                         <td>
                                             <img src="{{ asset('storage/kegiatan/' . $kegiatan->foto) }}" alt=""
-                                                class="img img-thumbnail" style="20px">
+                                                class="img img-thumbnail kegiatan-img"
+                                                style="width: 100px; cursor: pointer;">
                                         </td>
+
                                         <td>
                                             <form action="{{ route('admin.kegiatan.destroy', $kegiatan->id) }}"
                                                 method="POST" class="form-delete d-inline">
@@ -57,6 +59,7 @@
         </div>
     </div>
 
+    {{-- modal tambah kegiatan --}}
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -89,15 +92,44 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal gambar --}}
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background: transparent; border: none;">
+                <div class="modal-body p-0">
+                    <img src="" id="modalImage" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')
     <script>
         $(function() {
-            $('#tabel-kegiatan').DataTable()
+            $('#tabel-kegiatan').DataTable({
 
+                "language": {
+                    "lengthMenu": "_MENU_ data", // ganti text "Show X entries"
+                    "search": "", // hilangkan label search
+                    "searchPlaceholder": "Cari...", // placeholder di input search
+                    "zeroRecords": "Tidak ada data yang cocok",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "infoEmpty": "Belum ada data",
+                    "infoFiltered": "(disaring dari _MAX_ total data)",
+                    "paginate": {
+                        "first": "Awal",
+                        "last": "Akhir",
+                        "next": "›",
+                        "previous": "‹"
+                    }
+                }
+            });
         });
 
+
+        // hapus data
         $('.btn-delete-kegiatan').click(function(e) {
             e.preventDefault();
             let form = $(this).closest('form'); // Ambil form terkait
@@ -118,7 +150,16 @@
                 }
             });
         });
+
+        // tampil gambar
+        $('.kegiatan-img').on('click', function() {
+            var src = $(this).attr('src'); // ambil src dari gambar yang diklik
+            $('#modalImage').attr('src', src); // set src ke modal
+            $('#imageModal').modal('show'); // tampilkan modal
+        });
     </script>
+
+
     @if (session('swal_icon'))
         <script>
             Swal.fire({

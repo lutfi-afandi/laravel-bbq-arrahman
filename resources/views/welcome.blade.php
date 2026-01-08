@@ -121,7 +121,7 @@
             <h3 class="p-jum" data-aos="zoom-in" data-aos-duration="1500">Gelombang
                 {{ $informasi->gelombang->nomor . ' - ' . $informasi->gelombang->tahun_akademik }}
             </h3>
-            <a href="/pendaftaran" class="btn btn-primary hover rounded-pill mt-3" data-aos="fade-up"
+            <a href="/pendaftaran" class="btn btn-outline-primary hover rounded-pill mt-3 btn-lg" data-aos="fade-up"
                 data-aos-duration="2000">Daftar Sekarang!</a>
         </div>
     </div>
@@ -287,81 +287,200 @@
                 <h4 class="p-info font-weight-bold" id="kontak" data-aos="zoom-in" data-aos-duration="2000">
                     Kontak</h4>
             </div>
+
             <div class="row d-flex justify-content-center">
+                {{-- WA --}}
+                <style>
+                    /* contact card modern */
+                    .contact-card {
+                        text-decoration: none;
+                        display: block;
+                        height: 100%;
+                    }
 
-                <div class="col-xl-3 col-md-6 mb-4" id="ig" data-aos="fade-left" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a target="_blank"
-                                            href="http://wa.me/62{{ $informasi->cp1 }}" id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">{{ $informasi->nama_cp1 }}</a>
+                    .contact-card .card {
+                        border-radius: 16px;
+                        transition: all 0.35s ease;
+                        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+                    }
+
+                    .contact-card:hover .card {
+                        transform: scale(1.04);
+                        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+                    }
+
+                    /* icon circle */
+                    .icon-wrap {
+                        width: 52px;
+                        height: 52px;
+                        background: rgba(40, 167, 69, 0.12);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.35s ease;
+                    }
+
+                    .icon-wrap i {
+                        font-size: 26px;
+                        color: #28a745;
+                    }
+
+                    /* hover icon animation */
+                    .contact-card:hover .icon-wrap {
+                        background: #28a745;
+                    }
+
+                    .contact-card:hover .icon-wrap i {
+                        color: #ffffff;
+                        transform: scale(1.15);
+                    }
+
+                    /* social card */
+                    .social-card {
+                        display: block;
+                        text-decoration: none;
+                    }
+
+                    .social-card .card {
+                        border-radius: 14px;
+                        transition: all 0.3s ease;
+                    }
+
+                    /* hover effect */
+                    .social-card:hover .card {
+                        transform: scale(1.035);
+                        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+                    }
+
+                    /* icon wrapper */
+                    .social-card .icon-wrap {
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    }
+
+                    /* instagram */
+                    .social-card.instagram .icon-wrap {
+                        background: rgba(225, 48, 108, 0.12);
+                    }
+
+                    .social-card.instagram i {
+                        color: #e1306c;
+                        font-size: 22px;
+                    }
+
+                    .social-card.instagram:hover .icon-wrap {
+                        background: #e1306c;
+                    }
+
+                    .social-card.instagram:hover i {
+                        color: #fff;
+                    }
+
+                    /* facebook */
+                    .social-card.facebook .icon-wrap {
+                        background: rgba(24, 119, 242, 0.12);
+                    }
+
+                    .social-card.facebook i {
+                        color: #1877f2;
+                        font-size: 22px;
+                    }
+
+                    .social-card.facebook:hover .icon-wrap {
+                        background: #1877f2;
+                    }
+
+                    .social-card.facebook:hover i {
+                        color: #fff;
+                    }
+                </style>
+
+                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-left" data-aos-duration="1800">
+                    <a href="https://wa.me/62{{ $informasi->cp1 }}" target="_blank" class="contact-card">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4">
+                                <div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <div class="h5 font-weight-bold text-dark mb-0">
+                                        {{ $informasi->nama_cp1 }}
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-whatsapp  fa-2x text-success"></i>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-whatsapp"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-4" id="ig" data-aos="fade-right" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a target="_blank"
-                                            href="http://wa.me/62{{ $informasi->cp2 }}" id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">{{ $informasi->nama_cp2 }}</a>
+                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-right" data-aos-duration="1800">
+                    <a href="https://wa.me/62{{ $informasi->cp2 }}" target="_blank" class="contact-card">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4">
+                                <div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <div class="h5 font-weight-bold text-dark mb-0">
+                                        {{ $informasi->nama_cp2 }}
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-whatsapp fa-2x text-success"></i>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-whatsapp"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-6 mb-4" id="ig" data-aos="fade-down" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a
-                                            href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
-                                            id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">@arrahmanteknokrat</a></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-instagram fa-2x text-danger"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-6 mb-4" id="ig" data-aos="fade-up" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a
-                                            href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
-                                            id="ig" class="h5 mb-0 font-weight-bold text-gray-800">LDK
-                                            Ar-Rahman Teknokrat</a></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-facebook fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
             </div>
+
+            <div class="row justify-content-center">
+
+                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-down" data-aos-duration="1800">
+                    <a href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
+                        class="social-card instagram">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Instagram</div>
+                                    <div class="font-weight-bold text-dark">
+                                        @arrahmanteknokrat
+                                    </div>
+                                </div>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-instagram"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="1800">
+                    <a href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
+                        class="social-card facebook">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Facebook</div>
+                                    <div class="font-weight-bold text-dark">
+                                        LDK Ar-Rahman Teknokrat
+                                    </div>
+                                </div>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
         </div>
 
     </div>

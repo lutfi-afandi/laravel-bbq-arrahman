@@ -10,37 +10,64 @@
                 @method('put')
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">LAUNCHING</label>
-                        <input type="date" name="launching" class="form-control" id=""
-                            value="{{ $informasi->launching }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">MULAI KBM</label>
-                        <input type="date" name="mulai_kbm" class="form-control" id=""
-                            value="{{ $informasi->muali_kbm }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">MABIT</label>
-                        <input type="date" name="mabit" class="form-control" id=""
-                            value="{{ $informasi->mabit }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">JALASAH</label>
-                        <input type="date" name="jalasah" class="form-control" id=""
-                            value="{{ $informasi->jalasah }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">TALKSHOW</label>
-                        <input type="date" name="talkshow" class="form-control" id=""
-                            value="{{ $informasi->talkshow }}">
-                    </div>
+                    @php
+                        $dates = [
+                            'launching' => $informasi->launching,
+                            'mulai_kbm' => $informasi->mulai_kbm,
+                            'mabit' => $informasi->mabit,
+                            'jalasah' => $informasi->jalasah,
+                            'talkshow' => $informasi->talkshow,
+                        ];
+                    @endphp
 
+                    @foreach ($dates as $key => $value)
+                        <div class="form-group">
+                            <label>{{ strtoupper(str_replace('_', ' ', $key)) }}</label>
+                            <input type="text" class="form-control datepicker" name="{{ $key }}"
+                                value="{{ $value ? \Carbon\Carbon::parse($value)->format('d/m/Y') : '' }}">
+                        </div>
+                    @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info " type="submit"><i class="fa fa-paper-plane"></i> Update</button>
+                    <button class="btn btn-info" type="submit"><i class="fa fa-paper-plane"></i> Update</button>
                 </div>
             </form>
+
+
         </div>
     </div>
 </div>
+
+@push('css')
+    <!-- Bootstrap Datepicker CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" />
+@endpush
+
+@push('js')
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy', // tampilannya dd/mm/yyyy
+                autoclose: true
+            });
+
+            // konversi dd/mm/yyyy ke yyyy-mm-dd saat submit
+            $('form').on('submit', function() {
+                $('.datepicker').each(function() {
+                    let val = $(this).val();
+                    if (val) {
+                        let parts = val.split('/');
+                        if (parts.length === 3) {
+                            let iso = parts[2] + '-' + parts[1] + '-' + parts[0]; // yyyy-mm-dd
+                            $(this).val(iso);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

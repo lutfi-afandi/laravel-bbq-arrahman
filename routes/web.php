@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Pendaftaran;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::post('/perbarui-password/updatepw', [HomeController::class, 'updatepw'])-
 
 Route::resource('/pendaftaran', Pendaftaran::class)->names('pendaftaran');
 Route::get('/pendaftaran-lihat', [Pendaftaran::class, 'lihat'])->name('pendaftaran.lihat');
+
+
+
 
 require __DIR__ . '/admin.php';
 require __DIR__ . '/auth.php';

@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Kegiatan extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+
+    protected $fillable = [
+        'nama_kegiatan',
+        'deskripsi',
+        'foto'
+    ];
 }
