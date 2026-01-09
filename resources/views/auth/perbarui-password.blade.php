@@ -1,77 +1,98 @@
 @extends('template.main')
+
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-6 ">
-            <div class="card">
-                <div class="card-header">Perbarui Password</div>
+        <div class="col-md-5">
+            <div class="card card-outline card-primary shadow-sm">
+                <div class="card-header text-center">
+                    <h5 class="mb-0 fw-semibold">
+                        <i class="fa fa-lock mr-1"></i> Perbarui Password
+                    </h5>
+                </div>
 
                 <div class="card-body">
+
                     @if (session('error'))
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fa fa-times-circle mr-1"></i>
                             {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                         </div>
                     @endif
+
                     @if (session('success'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <i class="fa fa-check-circle mr-1"></i>
                             {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
                         </div>
                     @endif
-                    <form class="form-horizontal" method="POST" action="{{ route('perbaruipassword_new') }}">
+
+                    <form method="POST" action="{{ route('perbaruipassword_new') }}">
                         @csrf
-                        <div class="form-group row">
-                            <label for="new-password" class="col-md-4 control-label">Password Lama</label>
 
-                            <div class="col-md-6">
-                                <input id="current-password" type="password"
-                                    class="form-control form-control-sm @error('current-password') is-invalid @enderror"
-                                    name="current-password" placeholder="Password Lama">
-                                @error('current-password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        {{-- Password Lama --}}
+                        <div class="form-group">
+                            <label>Password Lama</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-key"></i>
                                     </span>
-                                @enderror
+                                </div>
+                                <input type="password" class="form-control @error('current-password') is-invalid @enderror"
+                                    name="current-password" placeholder="Masukkan password lama">
                             </div>
+                            @error('current-password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <label for="new-password" class="col-md-4 control-label">Password Baru</label>
-                            <div class="col-md-6">
-                                <input id="new_password" type="password"
-                                    class="form-control form-control-sm @error('new_password') is-invalid @enderror"
-                                    name="new_password" placeholder="Password Baru">
-                                @error('new_password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        {{-- Password Baru --}}
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-lock"></i>
                                     </span>
-                                @enderror
+                                </div>
+                                <input type="password" class="form-control @error('new_password') is-invalid @enderror"
+                                    name="new_password" placeholder="Masukkan password baru">
                             </div>
+                            @error('new_password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <label for="new-password-confirm" class="col-md-4 control-label">Konfirmasi Password
-                                Baru</label>
-
-                            <div class="col-md-6">
-                                <input id="new-password_confirm" type="password"
-                                    class="form-control form-control-sm @error('new_password_confirm') is-invalid @enderror"
-                                    name="new_password_confirm" placeholder="Konfirmasi Password Baru">
-                                @error('new_password_confirm')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                        {{-- Konfirmasi Password --}}
+                        <div class="form-group">
+                            <label>Konfirmasi Password Baru</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-check"></i>
                                     </span>
-                                @enderror
+                                </div>
+                                <input type="password"
+                                    class="form-control @error('new_password_confirm') is-invalid @enderror"
+                                    name="new_password_confirm" placeholder="Ulangi password baru">
                             </div>
+                            @error('new_password_confirm')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 col-md-offset-4">
-                                <a href="/" class="btn btn-xs btn-default"><i class="fa fa-arrow-left"></i>
-                                    Kembali</a>
-                                <button type="submit" class="btn btn-xs btn-primary">
-                                    <i class="fa fa-edit"></i> Perbarui Password
-                                </button>
-                            </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="/" class="btn btn-sm btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Kembali
+                            </a>
+
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="fa fa-save"></i> Perbarui Password
+                            </button>
                         </div>
+
                     </form>
                 </div>
             </div>

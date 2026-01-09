@@ -43,13 +43,10 @@
                         <thead>
                             <tr class="bg-maroon">
                                 <th scope="col">#</th>
-                                <th class="th-sm">NPM</th>
                                 <th class="th-sm">Nama Lengkap</th>
                                 <th class="th-sm">Kelas</th>
-                                <th class="th-sm">Kelancaran</th>
                                 <th class="th-sm">Jenis Kelamin</th>
                                 <th>Gelombang</th>
-                                <th class="th-sm">Nama Tutor</th>
                                 <th class="th-sm">Jadwal BBQ</th>
                                 <th class="th-sm">Nilai</th>
                             </tr>
@@ -58,20 +55,66 @@
                             @foreach ($mahasiswas as $mahasiswa)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $mahasiswa->npm }}</td>
-                                    <td>{{ $mahasiswa->nama }}</td>
-                                    <td>{{ $mahasiswa->jurusan->kode . ' - ' . $mahasiswa->kelas->nama }}
-                                    <td>{{ $mahasiswa->kelancaran_mengaji }}
+                                    <td>
+                                        <span class="d-block font-weight-bold">
+                                            {{ $mahasiswa->nama }}
+                                        </span>
+                                        <span class="d-block text-muted small">
+                                            NPM: {{ $mahasiswa->npm }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="d-block font-weight-semibold">
+                                            {{ $mahasiswa->jurusan->kode . ' - ' . $mahasiswa->kelas->nama }}
+                                        </span>
+                                        <span class="d-block text-muted small">
+                                            Kelancaran: {{ $mahasiswa->kelancaran_mengaji }}
+                                        </span>
                                     <td>{{ ucwords($mahasiswa->jk) }}
-                                    <td>{{ $mahasiswa->gelombang->nomor }}
-                                    <td>{{ $mahasiswa->kelompok->jadwal->tutor->name ?? '' }}
                                     <td>
-                                        {{ $mahasiswa->kelompok->jadwal->waktu->hari ?? '' }} -
-                                        {{ $mahasiswa->kelompok->jadwal->waktu->jam ?? '' }}
+                                        {{ $mahasiswa->gelombang->tahun_akademik . '-' . $mahasiswa->gelombang->nomor }}
                                     </td>
                                     <td>
-                                        {{ $mahasiswa->kelompok->nilai_akhir ?? '' }}
+                                        <span class="d-block fw-semibold">
+                                            Tutor:
+                                            {{ $mahasiswa->kelompok->jadwal->tutor->name ?? '' }}
+                                        </span>
+                                        <span class="d-block text-success font-wight-bold small">
+                                            {{ $mahasiswa->kelompok->jadwal->waktu->hari ?? '' }}:
+                                            {{ $mahasiswa->kelompok->jadwal->waktu->jam ?? '' }}
+                                        </span>
                                     </td>
+                                    <td class="text-center align-middle">
+                                        @php
+                                            $nilai = $mahasiswa->kelompok->nilai_akhir ?? null;
+                                            $huruf = $mahasiswa->kelompok->huruf_mutu ?? null;
+
+                                            $badgeClass = match ($huruf) {
+                                                'A' => 'badge-success',
+                                                'B' => 'badge-primary',
+                                                'E' => 'badge-danger',
+                                                default => 'badge-secondary',
+                                            };
+                                        @endphp
+
+                                        @if ($huruf)
+                                            <div class="d-inline-block text-center">
+                                                <span class="badge badge-sm {{ $badgeClass }} px-2 py-1"
+                                                    style="font-size:1.0rem; letter-spacing:1px;">
+                                                    {{ $huruf }}
+                                                </span>
+                                                @if ($nilai)
+                                                    <div class="text-muted text-sm mt-1">
+                                                        {{ $nilai }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+
+
                                 </tr>
                             @endforeach
                         </tbody>

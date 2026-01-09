@@ -32,6 +32,37 @@
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('template_lte/plugins/daterangepicker/daterangepicker.css') }}">
 
+    <style>
+        .btn-primary {
+            background: linear-gradient(135deg, #424fc1, #007bff);
+            border: none;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #5bc0de);
+            border: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #ff6b6b);
+            border: none;
+        }
+
+        .bg-primary {
+            background: linear-gradient(135deg, #424fc1, #007bff);
+            border: none;
+        }
+
+        .bg-info {
+            background: linear-gradient(135deg, #17a2b8, #5bc0de);
+            border: none;
+        }
+
+        .bg-danger {
+            background: linear-gradient(135deg, #dc3545, #ff6b6b);
+            border: none;
+        }
+    </style>
     @stack('css')
 </head>
 
@@ -40,7 +71,7 @@
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header  navbar navbar-expand  navbar-primary navbar-dark p-1 border-bottom-0">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav  p-1">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>

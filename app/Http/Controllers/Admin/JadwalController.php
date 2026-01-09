@@ -26,6 +26,8 @@ class JadwalController extends Controller
         $waktus = Waktu::all();
         $jadwals = Jadwal::with('tutor', 'gelombang', 'waktu', 'kelompok.mahasiswa')->where('gelombang_id', $informasi->gelombang_id)->get();
 
+        $waktusGrouped = $waktus->groupBy('hari');
+
         $tutors = Tutor::all();
 
         // dd($jadwals);
@@ -33,7 +35,7 @@ class JadwalController extends Controller
             $gelombang_selected = Gelombang::where('nomor', $request->nomor)->where('tahun_akademik', $request->ta)->first();
             // dd($gelombang_selected, $request->all());
             $jadwals = Jadwal::with('tutor', 'gelombang', 'waktu', 'kelompok.mahasiswa')->where('gelombang_id', $gelombang_selected->id)->get();
-            // 
+            //
         }
 
         return view('admin.jadwal.index', compact(
@@ -44,6 +46,7 @@ class JadwalController extends Controller
             'informasi',
             'tutors',
             'waktus',
+            'waktusGrouped',
         ));
     }
 

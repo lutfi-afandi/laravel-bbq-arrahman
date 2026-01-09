@@ -2,149 +2,147 @@
 
 @section('content')
     @if ($jadwal == null)
-        <div class="col-md-6 ">
-            <div class="card card-default">
-                <div class="card-header bg-info">
-                    <h3 class="card-title">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Informasi
-                    </h3>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="callout callout-info">
+                    <h5><i class="fas fa-info-circle"></i> Informasi</h5>
+                    <p class="mb-0">
+                        Kamu belum mendapat kelompok.
+                        Silakan hubungi panitia BBQ untuk informasi lebih lanjut.
+                    </p>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="callout callout-info">
-                        <h5>Mohon Maaf!</h5>
-
-                        <p>Kamu belum mendapat kelompok. Silahkan hubungi panitia BBQ untuk lebih lengkapnya</p>
-                    </div>
-                </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     @else
-        <div class="card card-maroon card-outline">
-            <div class="card-header">
-                <div class="card-header">
-                    <table class="table table-sm mb-0">
-                        <thead>
-                            <tr>
-                                <td width="200px" class="">Nama Tutor</td>
-                                <td width="10px">:</td>
-                                <th>{{ $jadwal->tutor->name }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nomor WA</td>
-                                <td>:</td>
-                                <th>{{ $jadwal->tutor->no_wa }}</th>
-                            </tr>
-                            <tr>
-                                <td>Waktu</td>
-                                <td>:</td>
-                                <th>{{ $jadwal->waktu->hari }} - {{ $jadwal->waktu->jam }} WIB
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-
+        {{-- ================= INFO TUTOR ================= --}}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info-box bg-gradient-maroon">
+                    <span class="info-box-icon"><i class="fas fa-user-tie"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Tutor</span>
+                        <span class="info-box-number">{{ $jadwal->tutor->name }}</span>
+                        <small>{{ $jadwal->waktu->hari }} • {{ $jadwal->waktu->jam }} WIB</small>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
+
+            <div class="col-md-4">
+                <a target="_blank" href="https://api.whatsapp.com/send?phone=62{{ $jadwal->tutor->no_wa }}"
+                    class="info-box bg-gradient-success">
+                    <span class="info-box-icon"><i class="fab fa-whatsapp"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">WhatsApp Tutor</span>
+                        <span class="info-box-number">+62 {{ $jadwal->tutor->no_wa }}</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box bg-gradient-info">
+                    <span class="info-box-icon"><i class="fas fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Jumlah Peserta</span>
+                        <span class="info-box-number">{{ $mahasiswas->count() }} Orang</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ================= ANGGOTA KELOMPOK ================= --}}
+        <div class="card card-outline card-maroon">
+            <div class="card-header">
+                <h5 class="card-title">
+                    <i class="fas fa-users"></i> Anggota Kelompok
+                </h5>
+            </div>
+
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped table-sm text-nowrap" id="data-table">
+                    <table class="table table-striped table-sm mb-0">
                         <thead class="bg-gradient-success">
                             <tr>
                                 <th class="text-center">#</th>
                                 <th>NPM</th>
-                                <th>Nama Lengkap</th>
-                                <th>Jurusan - Kelas </th>
-                                <th>Nomor WA </th>
+                                <th>Nama</th>
+                                <th>Jurusan / Kelas</th>
+                                <th>WA</th>
                                 <th>Kelancaran</th>
-                                <th>Jenis Kelamin</th>
+                                <th>JK</th>
                             </tr>
                         </thead>
-                        <tbody class="">
+                        <tbody>
                             @foreach ($mahasiswas as $row)
                                 <tr class="{{ $mahasiswa->id == $row->id ? 'table-success' : '' }}">
-                                    <th class="text-center">{{ $loop->iteration }}</th>
-                                    <td class="align-middle">{{ $row->npm }}</td>
-                                    <td class="align-middle">{{ $row->nama }}</td>
-                                    <td class="align-middle">{{ $row->jurusan->kode }} - {{ $row->kelas->nama }}</td>
-                                    <td class="align-middle">
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ $row->npm }}</td>
+                                    <td class="font-weight-bold">{{ $row->nama }}</td>
+                                    <td>{{ $row->jurusan->kode }} - {{ $row->kelas->nama }}</td>
+                                    <td>
                                         <a target="_blank"
-                                            href="https://api.whatsapp.com/send?phone=62{{ $row->nomor_wa }}&amp;text=Assalamu'alaikum, %0ASalam kenal, nama Saya *Reza Ashari*%0AKita satu kelompok BBQ %0AYuk berangkat BBQ 😁"
-                                            class="badge badge-success ">
-                                            <span class="text"><strong>+62 {{ $row->nomor_wa }}</strong> </span>
+                                            href="https://api.whatsapp.com/send?phone=62{{ $row->nomor_wa }}"
+                                            class="badge badge-success">
+                                            <i class="fab fa-whatsapp"></i> +62 {{ $row->nomor_wa }}
                                         </a>
                                     </td>
-                                    <td class="align-middle">{{ $row->kelancaran_mengaji }}</td>
-                                    <td class="align-middle">{{ ucwords($row->jk) }}</td>
-
+                                    <td>
+                                        <span class="badge badge-info">
+                                            {{ $row->kelancaran_mengaji }}
+                                        </span>
+                                    </td>
+                                    <td>{{ strtoupper($row->jk) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
 
-        <div class="card card-maroon card-outline">
+        {{-- ================= KEHADIRAN ================= --}}
+        <div class="card card-outline card-maroon">
             <div class="card-header">
-                <h5 class="card-title">Kehadiran <strong>{{ $mahasiswa->nama }}</strong> </h5> &nbsp; <small
-                    class="text-success"></small>
-                <div class="card-tools">
-
-                </div>
+                <h5 class="card-title">
+                    <i class="fas fa-calendar-check"></i>
+                    Kehadiran — <strong>{{ $mahasiswa->nama }}</strong>
+                </h5>
             </div>
 
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-
-                    <table class="table table-striped table-bordered table-sm text-nowrap" width="100%">
-                        <thead class="bg-gradient-purple">
+                    <table class="table table-bordered table-sm text-nowrap mb-0">
+                        <thead class="bg-gradient-purple text-center">
                             <tr>
-                                <th width="10%" class="text-center align-middle" rowspan="2">NPM</th>
-                                <th width="20%" class="text-center align-middle" rowspan="2">Nama</th>
-                                <th class="text-center" colspan="12">Pertemuan</th>
+                                <th rowspan="2" class="align-middle">NPM</th>
+                                <th rowspan="2" class="align-middle">Nama</th>
+                                <th colspan="12">Pertemuan</th>
                             </tr>
-                            <tr class="text-center">
-                                <th width="">1</th>
-                                <th width="">2</th>
-                                <th width="">3</th>
-                                <th width="">4</th>
-                                <th width="">5</th>
-                                <th width="">6</th>
-                                <th width="">7</th>
-                                <th width="">8</th>
-                                <th width="">9<br></th>
-                                <th width="">10</th>
-                                <th width="">11</th>
-                                <th width="">12</th>
+                            <tr>
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <th>{{ $i }}</th>
+                                @endfor
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($mahasiswas as $mhs)
                                 <tr class="text-center {{ $mahasiswa->id == $mhs->id ? 'table-success' : '' }}">
                                     <td>{{ $mhs->npm }}</td>
-                                    <td class="text-left ">{{ $mhs->nama }} </td>
+                                    <td class="text-left">{{ $mhs->nama }}</td>
                                     @for ($i = 1; $i <= 12; $i++)
                                         <td>
                                             <i
-                                                class="fa {{ icon($mhs->kelompok->{'p' . $i})['icon'] }} text-{{ icon($mhs->kelompok->{'p' . $i})['text'] }}"></i>
+                                                class="fa
+                                        {{ icon($mhs->kelompok->{'p' . $i})['icon'] }}
+                                        text-{{ icon($mhs->kelompok->{'p' . $i})['text'] }}">
+                                            </i>
                                         </td>
                                     @endfor
-
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     @endif
-    <!-- /.card -->
 @endsection

@@ -41,59 +41,97 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table table-striped table-sm text-nowrap" id="data-table">
-                    <thead class="bg-gradient-success">
+                <table class="table table-hover table-sm text-nowrap" id="data-table">
+                    <thead class="bg-gradient-success text-white">
                         <tr>
                             <th class="text-center">#</th>
-                            <th>Hari</th>
-                            <th>Pertemuan Ke</th>
-                            <th>Tanggal </th>
+                            <th>Jadwal</th>
+                            <th>Pertemuan</th>
                             <th>Peserta</th>
-                            <th>Hadir</th>
-                            <th>Izin</th>
-                            <th>Absen</th>
-                            <th>Materi</th>
-                            <th>Keterangan</th>
-                            <th>Foto</th>
-                            <th>Aksi</th>
+                            <th>Kehadiran</th>
+                            <th>Materi & Catatan</th>
+                            <th class="text-center">Foto</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="">
+
+                    <tbody>
                         @foreach ($laporans as $laporan)
                             <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <td>{{ $laporan->jadwal->waktu->hari }} - {{ $laporan->jadwal->waktu->jam }}</td>
-                                <td>{{ $laporan->no_pertemuan }}</td>
-                                <td>{{ indoDateFull($laporan->tanggal) }}</td>
-                                <td>{{ $laporan->jumlah_peserta }}</td>
-                                <td>{{ $laporan->hadir }}</td>
-                                <td>{{ $laporan->izin }}</td>
-                                <td>{{ $laporan->absen }}</td>
-                                <td>{{ $laporan->materi }}</td>
-                                <td>{{ $laporan->keterangan }}</td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
 
                                 <td>
-                                    <a class="btn btn-xs btn-warning" target="_blank"
-                                        href="{{ asset('storage/' . $laporan->foto) }}"><i class=" fa fa-file-image"></i>
-                                    </a>
+                                    <strong>{{ $laporan->jadwal->waktu->hari }}</strong><br>
+                                    <small class="text-muted">
+                                        <i class="far fa-clock"></i> {{ $laporan->jadwal->waktu->jam }}<br>
+                                    </small>
                                 </td>
+
                                 <td>
+                                    <span class="badge badge-info d-inline-block mb-1">
+                                        Ke-{{ $laporan->no_pertemuan }}
+                                    </span>
+                                    <div class="text-muted small">
+                                        <i class="far fa-calendar"></i>
+                                        {{ indoDateFull($laporan->tanggal) }}
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong>{{ $laporan->jumlah_peserta }}</strong> orang
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-user-check"></i> {{ $laporan->hadir }}
+                                    </span>
+                                    <span class="badge badge-warning">
+                                        <i class="fas fa-user-clock"></i> {{ $laporan->izin }}
+                                    </span>
+                                    <span class="badge badge-danger">
+                                        <i class="fas fa-user-times"></i> {{ $laporan->absen }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <strong>{{ $laporan->materi }}</strong>
+                                    @if ($laporan->keterangan)
+                                        <br>
+                                        <small class="text-muted">
+                                            <i class="fas fa-sticky-note"></i>
+                                            {{ $laporan->keterangan }}
+                                        </small>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if ($laporan->foto)
+                                        <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
+                                            class="btn btn-xs btn-outline-warning" title="Lihat Foto">
+                                            <i class="far fa-image"></i>
+                                        </a>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
                                     <form action="{{ route('tutor.laporan.destroy', $laporan->id) }}" method="POST"
                                         class="form-delete d-inline">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-danger btn-xs btn-delete-laporan"
-                                            data-id="{{ $laporan->id }}">
+                                        <button type="submit" class="btn btn-xs btn-outline-danger btn-delete-laporan"
+                                            data-id="{{ $laporan->id }}" title="Hapus Laporan">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
-
-
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

@@ -1,478 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Bimbingan Belajar Quran Teknokrat">
-    <meta name="keywords" content="BBQ" />
+    <meta name="keywords" content="BBQ">
     <title>{{ $title ?? 'Bimbingan Belajar Quran | Teknokrat' }}</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-
+    <!-- Fonts -->
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=fallback">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/template_lte/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="/template_lte/dist/css/adminlte.min.css">
 
+    <link rel="icon" href="/template_lte/img/logo.png">
 
-    <link rel="icon" type="image/x-icon" href="/template_lte/img/logo.png">
-
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-    <!-- Google Font -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        @media (min-width: 992px) {
-            .jumbotron {
-                background-image: url("template_lte/img/cover.png");
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                min-height: 680px;
-                width: 100%;
-                font-family: Arial, Helvetica, sans-serif;
-                margin-top: 20px;
-            }
 
-            h1,
-            h3 {
-                font-weight: bolder;
-                color: aliceblue;
+    <style>
+        :root {
+            --primary: #0d6efd;
+        }
+
+        /* ===============================
+       FIX UTAMA OVERFLOW MOBILE
+       WAJIB ADA (INI YANG BIKIN PUTIH KE KANAN HILANG)
+    =============================== */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            /* <<< FIX PALING PENTING */
+        }
+
+        body {
+            scroll-behavior: smooth;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h4.section-title {
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        /* ===============================
+       NAVBAR
+    =============================== */
+        .navbar {
+            background: rgba(13, 110, 253, .95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
+        }
+
+        /* ===============================
+       HERO SECTION
+    =============================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+
+            width: 100%;
+            /* <<< PENTING: JANGAN 100vw */
+            overflow: hidden;
+            /* <<< CEGAH BACKGROUND MELEBAR */
+        }
+
+        @media (min-width: 992px) {
+            .hero {
+                background-image: url("/template_lte/img/cover.png");
             }
         }
 
-        @media (max-width: 992px) {
-            .jumbotron {
-                background-image: url("template_lte/img/cover2.png");
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                min-height: 530px;
-                font-family: Arial, Helvetica, sans-serif;
-                margin-top: 20px;
+        @media (max-width: 991px) {
+            .hero {
+                background-image: url("/template_lte/img/cover2.png");
             }
+        }
 
-            h1,
-            h3 {
-                font-weight: bolder;
-                color: aliceblue;
-            }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, .45),
+                    rgba(0, 0, 0, .85));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+
+            max-width: 100%;
+            /* <<< JAGA-JAGA KONTEN */
+        }
+
+        /* ===============================
+       CARD GLOBAL
+    =============================== */
+        .card {
+            border-radius: 18px;
+        }
+
+        /* ===============================
+       INFO LIST
+    =============================== */
+        .info-list li {
+            border: none;
+            border-bottom: 1px dashed #ddd;
+            padding: 16px 12px;
+            /* <<< DITAMBAH SAMPING BIAR GA MEPET */
+        }
+
+        /* ===============================
+       KEGIATAN
+    =============================== */
+        .kegiatan .card {
+            transition: all .35s ease;
+        }
+
+        .kegiatan .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
+        }
+
+        /* ===============================
+       FOOTER
+    =============================== */
+        footer {
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, .12);
+        }
+
+        footer a {
+            transition: .3s;
+        }
+
+        footer a:hover {
+            color: #cce5ff;
+            text-decoration: none;
+        }
+
+        /* ===============================
+       HOVER EFFECT
+    =============================== */
+        .hover-scale {
+            transition: transform .2s ease;
+            display: inline-block;
+            /* <<< BIAR TRANSFORM AMAN */
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.25);
+        }
+
+        .hover-scale-sm {
+            transition: transform .2s ease;
+            /* <<< FIX KECIL TAPI PENTING */
+        }
+
+        .hover-scale-sm:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===============================
+       EXTRA SAFETY (OPSIONAL TAPI AMAN)
+    =============================== */
+        img,
+        svg {
+            max-width: 100%;
+            height: auto;
         }
     </style>
+
 </head>
 
 <body>
 
-
-    <!-- Nav -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary layout-footer-fixed">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container">
-            <img src="/template_lte/img/brand.png" class="navbar-brand pt-0 pb-0" alt="" width="50px">
-            <button class="navbar-toggler text-white" type="button" data-toggle="collapse"
-                data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <img src="/template_lte/img/brand.png" width="50" class="mr-2">
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav text-center ml-auto mt-2 mt-lg-0 text-uppercase ">
-                    <li class="nav-item active mr-2">
-                        <a class="nav-link" href="#">Beranda <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item mr-2">
-                        <a class="nav-link text-white" href="#info">Info</a>
-                    </li>
-                    <li class="nav-item mr-2">
-                        <a class="nav-link text-white" href="#kegiatan" tabindex="-1">Kegiatan</a>
-                    </li>
-                    <li class="nav-item mr-2">
-                        <a class="nav-link  text-white" href="#kontak" tabindex="-1">Kontak</a>
-                    </li>
+                <ul class="navbar-nav ml-auto text-uppercase align-items-center">
+                    <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+                    <li class="nav-item"><a href="#info" class="nav-link">Info</a></li>
+                    <li class="nav-item"><a href="#kegiatan" class="nav-link">Kegiatan</a></li>
+                    <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
 
                     @if (!Auth::user())
-                        <li class="nav-item mr-2">
-                            <a class="nav-link btn bg-gradient-success btn-sm  text-white hover rounded-pill mb-1 "
-                                href="login" tabindex="-1">Login</a>
+                        <li class="nav-item ml-2">
+                            <a href="login" class="btn btn-success btn-sm rounded-pill">Login</a>
                         </li>
-                        <li class="nav-item mr-2">
-                            <a class="nav-link btn bg-gradient-navy btn-sm hover rounded-pill text-white"
-                                href="pendaftaran" tabindex="-1">Daftar</a>
+                        <li class="nav-item ml-2">
+                            <a href="pendaftaran" class="btn btn-dark btn-sm rounded-pill">Daftar</a>
                         </li>
                     @else
-                        <a class="nav-link btn btn-info btn-sm hover rounded-pill text-white" href="login"
-                            tabindex="-1">Dashboard</a>
+                        <li class="nav-item ml-2">
+                            <a href="login" class="btn btn-info btn-sm rounded-pill">Dashboard</a>
+                        </li>
                     @endif
-
                 </ul>
             </div>
         </div>
-
     </nav>
 
-    <!-- header -->
-    <div class="jumbotron jumbotron-fluid " style="margin-top:0; margin-bottom: 16px;">
-        <div class="container text-center " style="margin-top: 150px;">
-            <h1 class="" data-aos="zoom-in" data-aos-duration="2000">Bimbingan Belajar Qur'an</h1>
-            <h3 class="p-jum" data-aos="zoom-in" data-aos-duration="1500">Gelombang
-                {{ $informasi->gelombang->nomor . ' - ' . $informasi->gelombang->tahun_akademik }}
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-content text-center">
+            <h1 data-aos="zoom-in">Bimbingan Belajar Qur'an</h1>
+            <h3 class="mt-3" data-aos="zoom-in" data-aos-delay="200">
+                Gelombang {{ $informasi->gelombang->nomor }} -
+                {{ $informasi->gelombang->tahun_akademik }}
             </h3>
-            <a href="/pendaftaran" class="btn btn-outline-primary hover rounded-pill mt-3 btn-lg" data-aos="fade-up"
-                data-aos-duration="2000">Daftar Sekarang!</a>
+            <a href="/pendaftaran" class="btn btn-outline-light btn-lg rounded-pill mt-4" data-aos="fade-up">Daftar
+                Sekarang</a>
         </div>
-    </div>
+    </section>
 
-    <!-- Apa itu BBQ -->
-    <div class="apa">
+    <!-- APA -->
+    <section>
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
-                <h4 class="p-info mb-1 font-weight-bold" id="info" data-aos="fade-up">Apa itu BBQ?</h4>
-
-            </div>
-            <hr>
-            <div class="row" data-aos="zoom-out" data-aos-duration="8000">
-                <div class="col-md-4 d-flex justify-content-center align-middle">
-                    <div class="item-icon mb-4 ">
-                        <img src="{{ asset('template_lte/img/logo.png') }}" class="navbar-brand" alt=""
-                            width="100px">
-
-                    </div>
+            <h4 class="section-title text-center mb-4" id="info" data-aos="fade-up">Apa itu BBQ?</h4>
+            <div class="row align-items-center" data-aos="zoom-out" data-aos-duration="8000">
+                <div class="col-md-4 text-center mb-3">
+                    <img src="/template_lte/img/logo.png" width="120">
                 </div>
                 <div class="col-md-8">
-                    <div class="item-icon mb-4 d-flex ">
-                        <div class="d-flex align-content-between">
-                            <p class=" ">Bimbingan Belajar Qur'an atau lebih dikenal dengan BBQ adalah kegiatan
-                                wajib yang bagi mahasiswa yang mengambil mata kuliah <strong>Pendidikan Agama
-                                    Islam</strong> semester ini. Kegiatan BBQ dijalankan oleh Unit Kegiatan Mahasiswa
-                                Islam (UKMI) Ar-Rahman Teknokrat. Selama satu semester mahasiswa akan belajar tidak
-                                hanya membaca Quran, tapi juga termasuk aqidah, akhlaq, san saling berbagi pengetahuan
-                                kuliah bersama <strong>tutor</strong></p>
-                        </div>
-
-                    </div>
+                    <p class="lead">
+                        Bimbingan Belajar Qur'an atau lebih dikenal dengan BBQ adalah kegiatan
+                        wajib yang bagi mahasiswa yang mengambil mata kuliah <strong>Pendidikan Agama
+                            Islam</strong> semester ini. Kegiatan BBQ dijalankan oleh Unit Kegiatan Mahasiswa
+                        Islam (UKMI) Ar-Rahman Teknokrat. Selama satu semester mahasiswa akan belajar tidak
+                        hanya membaca Quran, tapi juga termasuk aqidah, akhlaq, san saling berbagi pengetahuan
+                        kuliah bersama <strong>tutor</strong>
+                    </p>
                 </div>
-
-
             </div>
         </div>
-    </div>
+    </section>
 
-
-    <!-- INFO Pendaftaran -->
-    <div class="info bg-light pt-2">
+    <!-- INFO -->
+    <section class="bg-light">
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
-                <h4 class="p-info font-weight-bold" id="info" data-aos="fade-up" data-aos-duration="1800">
-                    Informasi Pendaftaran</h4>
-            </div>
-            <div class="row ">
-                <div class="col-md-4" data-aos="fade-right" data-aos-duration="1800">
-                    <img src="{{ asset('storage/pamflet/' . $informasi->pamflet) }}" class="img img-thumbnail">
+            <h4 class="section-title text-center mb-4" data-aos="fade-up" data-aos-duration="1800">Informasi Pendaftaran
+            </h4>
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-3" data-aos="fade-right" data-aos-duration="1800">
+                    <img src="{{ asset('storage/pamflet/' . $informasi->pamflet) }}" class="img-fluid rounded shadow">
                 </div>
-                <div class="col-md-8 mb-3" data-aos="fade-left" data-aos-duration="1800">
-                    <ul class="list-group">
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-danger"></i>Masa
-                            Pendaftaran : <strong class="ml-4 float-right">
-                                {{ indoDateFull($informasi->mulai_daftar) }} -
-                                {{ indoDateFull($informasi->akhir_daftar) }}</strong>
+                <div class="col-md-8" data-aos="fade-left" data-aos-duration="1800">
+                    <ul class="list-group list-group-flush info-list shadow-sm rounded-lg">
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-calendar-alt text-danger mr-2"></i>
+                                <span class="font-weight-semibold">Masa Pendaftaran</span>
+                            </div>
+                            <strong class="text-muted">
+                                {{ indoDateFull($informasi->mulai_daftar) }} –
+                                {{ indoDateFull($informasi->akhir_daftar) }}
+                            </strong>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-money-bill-wave-alt mr-3 text-primary"></i>Biaya
-                            Pendaftaran :
-                            <strong style="color: white; font-size: 1.5rem;"
-                                class="ml-4 badge badge-success float-right">Rp. {{ $informasi->biaya }}K</strong>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-money-bill-wave text-success mr-2"></i>
+                                <span class="font-weight-semibold">Biaya Pendaftaran</span>
+                            </div>
+                            <span class="badge badge-success badge-pill px-3 py-2">
+                                Rp {{ $informasi->biaya }}K
+                            </span>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-address-card mr-3 text-success"></i>Konfirmasi :
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fab fa-whatsapp text-success mr-2"></i>
+                                <span class="font-weight-semibold">Konfirmasi Pembayaran</span>
+                            </div>
+
+
                             <a target="_blank"
-                                href="https://api.whatsapp.com/send?phone=62{{ $informasi->wa_konfirmasi }}&text=Assalamu'alaikum kak, nama Saya *...*%0AIngin%20Konfirmasi%20Pembayaran%20Pendaftaran BBQ %20 atas nama *...*%0ATerimakasih.🙏"
-                                class="btn btn-success btn-icon-split float-right">
-                                <span class="icon text-white-50 kon">
-                                    <i class="fab fa-whatsapp"></i>
+                                href="https://api.whatsapp.com/send?phone=62{{ $informasi->wa_konfirmasi }}&text=Assalamu'alaikum kak, nama Saya *...*%0AIngin%20Konfirmasi%20Pembayaran%20Pendaftaran BBQ %20 atas nama *...*%0ATerimakasih.🙏">
+                                <span class="badge badge-success badge-pill px-3 py-2 hover-scale">
+                                    +62 {{ $informasi->wa_konfirmasi }}K
                                 </span>
-                                <span class="text"><strong> '+62'{{ $informasi->wa_konfirmasi }}</strong> </span>
                             </a>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-[edit]"></i>Mulai KBM
-                            :
-                            <strong class="ml-4 float-right">{{ indoDateFull($informasi->mulai_kbm) }}<span
-                                    class="text-danger">*</span>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-calendar-check text-primary mr-2"></i>
+                                <span class="font-weight-semibold">Mulai KBM</span>
+                            </div>
+                            <strong>
+                                {{ indoDateFull($informasi->mulai_kbm) }}
+                                <span class="text-danger">*</span>
                             </strong>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-[edit]"></i>Launching
-                            BBQ :
-                            <strong class="ml-4 float-right">{{ indoDateFull($informasi->launching) }} <span
-                                    class="text-danger">*</span>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-rocket text-info mr-2"></i>
+                                <span class="font-weight-semibold">Launching BBQ</span>
+                            </div>
+                            <strong>
+                                {{ indoDateFull($informasi->launching) }}
+                                <span class="text-danger">*</span>
                             </strong>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-[edit]"></i>Mabit :
-                            <strong class="ml-4 float-right">{{ indoDateFull($informasi->mabit) }} <span
-                                    class="text-danger">*</span>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-moon text-indigo mr-2"></i>
+                                <span class="font-weight-semibold">Mabit</span>
+                            </div>
+                            <strong>
+                                {{ indoDateFull($informasi->mabit) }}
+                                <span class="text-danger">*</span>
                             </strong>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-"></i>Jalasah :
-                            <strong class="ml-4 float-right">{{ indoDateFull($informasi->jalasah) }}<span
-                                    class="text-danger">*</span>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-users text-warning mr-2"></i>
+                                <span class="font-weight-semibold">Jalasah</span>
+                            </div>
+                            <strong>
+                                {{ indoDateFull($informasi->jalasah) }}
+                                <span class="text-danger">*</span>
                             </strong>
                         </li>
-                        <li class="list-group-item"><i class="fa fa-lg fa-calendar-alt mr-3 text-"></i>BBQ
-                            Talkshow :
-                            <strong class="ml-4 float-right">{{ indoDateFull($informasi->talkshow) }} <span
-                                    class="text-danger">*</span>
+
+                        <li class="list-group-item  px-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-microphone text-secondary mr-2"></i>
+                                <span class="font-weight-semibold">BBQ Talkshow</span>
+                            </div>
+                            <strong>
+                                {{ indoDateFull($informasi->talkshow) }}
+                                <span class="text-danger">*</span>
                             </strong>
                         </li>
-                        <li class="list-group-item"><i class="text-danger">[*] tanggal bisa berubah</i></li>
+
+                        <li class="list-group-item  px-4 text-right text-danger small">
+                            <i>* tanggal dapat berubah sewaktu-waktu</i>
+                        </li>
 
                     </ul>
+
                 </div>
             </div>
         </div>
+    </section>
 
-    </div>
-
-    <!-- Kegiatan -->
-    <div class="kegiatan mt-2">
+    <!-- KEGIATAN -->
+    <section class="kegiatan" id="kegiatan">
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
-                <h4 class="p-info mb-1 font-weight-bold" id="kegiatan" data-aos="fade-up" data-aos-duration="1800">
-                    Kegiatan</h4>
-            </div>
-            <hr>
-
+            <h4 class="section-title text-center mb-4" data-aos="fade-up" data-aos-duration="1800">Kegiatan</h4>
             <div class="row">
-                @if ($kegiatans->isEmpty())
-                    <button class="btn btn-outline-primary btn-block p-4 text-xl mb-2">Kegiatan BBQ</button>
-                @else
-                    @foreach ($kegiatans as $kegiatan)
-                        <div class="col-md-4">
-                            <div class="card" data-aos="fade-up" data-aos-duration="2000">
-                                <img src="{{ asset('storage/kegiatan/' . $kegiatan->foto) }}" class="card-img-top"
-                                    alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <h4>{{ $kegiatan->nama_kegiatan }}</h4>
-                                    </h5>
-                                    <p class="card-text">
-                                        {{-- teks pendek --}}
-                                        <span class="short-text">
-                                            {{ Str::limit($kegiatan->deskripsi, 100, '...') }}
-                                        </span>
-
-                                        {{-- teks full, disembunyikan dulu --}}
-                                        <span class="full-text d-none">
-                                            {{ $kegiatan->deskripsi }}
-                                        </span>
-                                    </p>
-                                    <a href="javascript:void(0)" class="toggle-text btn btn-link p-0">
-                                        Baca lengkap
-                                    </a>
-                                </div>
+                @foreach ($kegiatans as $kegiatan)
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm" data-aos="fade-up" data-aos-duration="2000">
+                            <img src="{{ asset('storage/kegiatan/' . $kegiatan->foto) }}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="font-weight-bold">{{ $kegiatan->nama_kegiatan }}</h5>
+                                <p class="card-text">
+                                    <span class="short-text">{{ Str::limit($kegiatan->deskripsi, 100) }}</span>
+                                    <span class="full-text d-none">{{ $kegiatan->deskripsi }}</span>
+                                </p>
+                                <a href="javascript:void(0)" class="toggle-text btn btn-sm btn-outline-primary">
+                                    Baca lengkap
+                                </a>
                             </div>
                         </div>
-                    @endforeach
-
-                @endif
-
+                    </div>
+                @endforeach
             </div>
-
         </div>
-    </div>
+    </section>
 
-    <!-- kontak -->
-    <div class="kontak bg-light  pt-2">
+    <!-- KONTAK -->
+    <section id="kontak" class="bg-light">
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
-                <h4 class="p-info font-weight-bold" id="kontak" data-aos="zoom-in" data-aos-duration="2000">
-                    Kontak</h4>
-            </div>
-
-            <div class="row d-flex justify-content-center">
-                {{-- WA --}}
-                <style>
-                    /* contact card modern */
-                    .contact-card {
-                        text-decoration: none;
-                        display: block;
-                        height: 100%;
-                    }
-
-                    .contact-card .card {
-                        border-radius: 16px;
-                        transition: all 0.35s ease;
-                        background: linear-gradient(135deg, #ffffff, #f8f9fa);
-                    }
-
-                    .contact-card:hover .card {
-                        transform: scale(1.04);
-                        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-                    }
-
-                    /* icon circle */
-                    .icon-wrap {
-                        width: 52px;
-                        height: 52px;
-                        background: rgba(40, 167, 69, 0.12);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: all 0.35s ease;
-                    }
-
-                    .icon-wrap i {
-                        font-size: 26px;
-                        color: #28a745;
-                    }
-
-                    /* hover icon animation */
-                    .contact-card:hover .icon-wrap {
-                        background: #28a745;
-                    }
-
-                    .contact-card:hover .icon-wrap i {
-                        color: #ffffff;
-                        transform: scale(1.15);
-                    }
-
-                    /* social card */
-                    .social-card {
-                        display: block;
-                        text-decoration: none;
-                    }
-
-                    .social-card .card {
-                        border-radius: 14px;
-                        transition: all 0.3s ease;
-                    }
-
-                    /* hover effect */
-                    .social-card:hover .card {
-                        transform: scale(1.035);
-                        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-                    }
-
-                    /* icon wrapper */
-                    .social-card .icon-wrap {
-                        width: 44px;
-                        height: 44px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: all 0.3s ease;
-                    }
-
-                    /* instagram */
-                    .social-card.instagram .icon-wrap {
-                        background: rgba(225, 48, 108, 0.12);
-                    }
-
-                    .social-card.instagram i {
-                        color: #e1306c;
-                        font-size: 22px;
-                    }
-
-                    .social-card.instagram:hover .icon-wrap {
-                        background: #e1306c;
-                    }
-
-                    .social-card.instagram:hover i {
-                        color: #fff;
-                    }
-
-                    /* facebook */
-                    .social-card.facebook .icon-wrap {
-                        background: rgba(24, 119, 242, 0.12);
-                    }
-
-                    .social-card.facebook i {
-                        color: #1877f2;
-                        font-size: 22px;
-                    }
-
-                    .social-card.facebook:hover .icon-wrap {
-                        background: #1877f2;
-                    }
-
-                    .social-card.facebook:hover i {
-                        color: #fff;
-                    }
-                </style>
-
-                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-left" data-aos-duration="1800">
-                    <a href="https://wa.me/62{{ $informasi->cp1 }}" target="_blank" class="contact-card">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body d-flex align-items-center justify-content-between px-4">
-                                <div>
-                                    <div class="text-muted text-sm">WhatsApp</div>
-                                    <div class="h5 font-weight-bold text-dark mb-0">
-                                        {{ $informasi->nama_cp1 }}
-                                    </div>
-                                </div>
-                                <div class="icon-wrap">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-right" data-aos-duration="1800">
-                    <a href="https://wa.me/62{{ $informasi->cp2 }}" target="_blank" class="contact-card">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body d-flex align-items-center justify-content-between px-4">
-                                <div>
-                                    <div class="text-muted text-sm">WhatsApp</div>
-                                    <div class="h5 font-weight-bold text-dark mb-0">
-                                        {{ $informasi->nama_cp2 }}
-                                    </div>
-                                </div>
-                                <div class="icon-wrap">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
+            <h4 class="section-title text-center mb-4" data-aos="zoom-in">
+                Kontak
+            </h4>
+            <hr class="mb-5">
 
             <div class="row justify-content-center">
 
-                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-down" data-aos-duration="1800">
-                    <a href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
-                        class="social-card instagram">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                <!-- CP 1 -->
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-right">
+                    <a href="https://wa.me/62{{ $informasi->cp1 }}" target="_blank" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm h-100 hover-scale-sm">
+                            <!-- hover pindah ke card-body -->
+                            <div class="card-body d-flex justify-content-between align-items-center px-4 py-4">
                                 <div>
-                                    <div class="text-muted text-sm">Instagram</div>
-                                    <div class="font-weight-bold text-dark">
-                                        @arrahmanteknokrat
-                                    </div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <h5 class="font-weight-bold mb-0">{{ $informasi->nama_cp1 }}</h5>
                                 </div>
-                                <div class="icon-wrap">
-                                    <i class="fab fa-instagram"></i>
+                                <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width:52px;height:52px;background:#25D366;">
+                                    <i class="fab fa-whatsapp text-white fa-lg"></i>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
 
-                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="1800">
-                    <a href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
-                        class="social-card facebook">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                <!-- CP 2 -->
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-left">
+                    <a href="https://wa.me/62{{ $informasi->cp2 }}" target="_blank" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm h-100 hover-scale-sm">
+                            <div class="card-body d-flex justify-content-between align-items-center px-4 py-4">
                                 <div>
-                                    <div class="text-muted text-sm">Facebook</div>
-                                    <div class="font-weight-bold text-dark">
-                                        LDK Ar-Rahman Teknokrat
-                                    </div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <h5 class="font-weight-bold mb-0">{{ $informasi->nama_cp2 }}</h5>
                                 </div>
-                                <div class="icon-wrap">
-                                    <i class="fab fa-facebook-f"></i>
+                                <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width:52px;height:52px;background:#25D366;">
+                                    <i class="fab fa-whatsapp text-white fa-lg"></i>
                                 </div>
                             </div>
                         </div>
@@ -481,22 +445,67 @@
 
             </div>
 
+
+            <div class="row justify-content-center ">
+
+                <!-- Instagram -->
+                <div class="col-md-4 mb" data-aos="fade-up">
+                    <a href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
+                        class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-scale-sm">
+                            <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Instagram</div>
+                                    <strong>@arrahmanteknokrat</strong>
+                                </div>
+                                <i class="fab fa-instagram fa-lg text-danger"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Facebook -->
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="150">
+                    <a href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
+                        class="text-decoration-none">
+                        <div class="card border-0 shadow-sm hover-scale-sm">
+                            <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Facebook</div>
+                                    <strong>LDK Ar-Rahman Teknokrat</strong>
+                                </div>
+                                <i class="fab fa-facebook fa-lg text-primary"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
         </div>
+    </section>
 
-    </div>
 
-    <footer class="d-flex justify-content-center mt-5 bg-blue-600">&copy; arrahman - 2021</footer>
+    <!-- FOOTER -->
+    <footer class="bg-primary text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-left">
+                    &copy; 2021 Arrahman
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <a href="/pendaftaran" class="text-white mr-3">Daftar</a>
+                    <a href="/login" class="text-white mr-3">Login</a>
+                    <a href="https://api.whatsapp.com/send/?phone=6285765842510" target="_blank"
+                        class="text-white">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script>
-        window.jQuery || document.write(
-            '<script src="/assets/home/site/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')
-    </script>
-
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('template_lte/plugins/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <!-- JS (TIDAK DIUBAH) -->
+    <script src="/template_lte/plugins/jquery/jquery.min.js"></script>
+    <script src="/template_lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
@@ -504,20 +513,12 @@
     <script>
         $(document).on('click', '.toggle-text', function() {
             let cardBody = $(this).closest('.card-body');
-            let shortText = cardBody.find('.short-text');
-            let fullText = cardBody.find('.full-text');
-
-            shortText.toggleClass('d-none');
-            fullText.toggleClass('d-none');
-
-            // Ganti teks tombol
-            if ($(this).text() === "Baca lengkap") {
-                $(this).text("Tutup");
-            } else {
-                $(this).text("Baca lengkap");
-            }
+            cardBody.find('.short-text').toggleClass('d-none');
+            cardBody.find('.full-text').toggleClass('d-none');
+            $(this).text($(this).text() === 'Baca lengkap' ? 'Tutup' : 'Baca lengkap');
         });
     </script>
+
 </body>
 
 </html>

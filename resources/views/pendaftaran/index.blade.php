@@ -20,6 +20,10 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+    {{-- Bootstrap Icons --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
         <!-- Navbar -->
@@ -48,44 +52,48 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container">
-                    <div class="row">
+
+                    {{-- HEADER --}}
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-center">
+                            <h3 class="font-weight-bold mb-1 text-primary">
+                                📝 {{ $title ?? 'Pendaftaran BBQ' }}
+                            </h3>
+                            <p class="text-muted mb-0">
+                                Silakan lengkapi data berikut dengan benar
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-center">
                         <div class="col-lg-12">
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h5 class="card-title text-uppercase">{{ $title ?? '' }}</h5>
-                                    <div class="card-tools">
+
+                            <div class="card card-primary card-outline shadow-sm">
+                                <div class="card-header ">
+                                    <strong>Form Pendaftaran</strong>
+                                    <div class="card-tools mr-1">
                                         <a href="/" class="btn btn-sm btn-success">
                                             <i class="fa fa-home"></i> Beranda
                                         </a>
                                         <a href="{{ route('pendaftaran.lihat') }}" class="btn btn-sm bg-gradient-navy">
-                                            <i class="fa fa-eye"></i> Sudah daftar? lihat data pendaftar
+                                            <i class="fa fa-eye"></i> Lihat Data
                                         </a>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    @if (session('success'))
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            {{ session('success') }}
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    @endif
 
-                                    @if (session('error'))
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            {{ session('error') }}
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    @endif
+                                <div class="card-body">
+
+                                    {{-- ALERT --}}
+                                    @includeWhen(session('success'), 'partials.alert-success')
+                                    @includeWhen(session('error'), 'partials.alert-error')
 
                                     @if ($errors->any())
                                         <div class="alert alert-danger">
-                                            <ul>
+                                            <ul class="mb-0">
                                                 @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
                                                 @endforeach
@@ -93,250 +101,193 @@
                                         </div>
                                     @endif
 
+                                    {{-- PENDAFTARAN DITUTUP --}}
                                     @if ($informasi->status_pendaftaran == 'ditutup')
-                                        <div class="callout callout-danger bg-yellow">
-                                            <h4 class="alert-heading">Pemberitahuan!</h4>
-                                            <p>MOHON MAAF BUKAN MASA PENDAFTARAN BBQ.</p>
-                                            <hr>
-                                            <p class="mb-0">Harap hubungi panitia BBQ untuk informasi lebih lanjut.
+                                        <div class="callout callout-warning">
+                                            <h5><i class="fas fa-exclamation-circle"></i> Pendaftaran Ditutup</h5>
+                                            <p class="mb-0">
+                                                Saat ini pendaftaran BBQ sudah ditutup.
+                                                Silakan hubungi panitia untuk info lebih lanjut.
                                             </p>
                                         </div>
                                     @else
-                                        <!-- Form -->
                                         <form method="post" action="{{ route('pendaftaran.store') }}"
                                             enctype="multipart/form-data">
                                             @csrf
 
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="text-center"
-                                                            for="pilihGelombang">Gelombang</label>
-                                                        <input type="hidden" name="gelombang_id"
-                                                            value="{{ $informasi->gelombang_id }}">
-                                                        <select class="custom-select " name="gelombang1"
-                                                            id="pilihGelombang" disabled>
-                                                            <option value="">Gelombang
-                                                                {{ $informasi->gelombang->nomor }} -
-                                                                {{ $informasi->gelombang->tahun_akademik }}</option>
-                                                        </select>
-                                                        @error('gelombang_id')
-                                                            <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-
-                                                    </div>
+                                            {{-- ================= INFORMASI AKADEMIK ================= --}}
+                                            <div class="card card-outline card-info mb-3">
+                                                <div class="card-header">
+                                                    <strong>📘 Informasi Akademik</strong>
                                                 </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="">Nama Dosen</label>
-                                                        <select
-                                                            class="custom-select @error('dosen_id') is-invalid @enderror"
-                                                            name="dosen_id" required>
-                                                            <option value="">Pilih Dosen</option>
-                                                            @foreach ($dosens as $dosen)
-                                                                <option value="{{ $dosen->id }}"
-                                                                    {{ old('dosen_id') == $dosen->id ? 'selected' : '' }}>
-                                                                    {{ $dosen->nama }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('dosen_id')
-                                                            <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="">NPM</label>
-                                                        <input type="text" name="npm"
-                                                            class="form-control  @error('npm') is-invalid @enderror"
-                                                            id="npm" placeholder="NPM"
-                                                            value="{{ old('npm') }}" required>
-                                                        @error('npm')
-                                                            <div class="invalid-feedback">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="">Nama Lengkap</label>
-                                                        <input type="text" name="nama"
-                                                            class="form-control @error('nama') is-invalid @enderror"
-                                                            id="exampleFirstName" placeholder="Nama Lengkap"
-                                                            value="{{ old('nama') }}" required>
-                                                        @error('nama')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="">Nomor WA</label> <small
-                                                            class="text-danger">*(08xxxx)</small>
-                                                        <input type="number" name="nomor_wa"
-                                                            class="form-control @error('nomor_wa') is-invalid @enderror"
-                                                            id="exampleInputTelepon" placeholder="Nomor WhatsApp"
-                                                            value="{{ old('nomor_wa') }}" required>
-                                                        @error('nomor_wa')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group ">
-                                                        <label class="text-center" for="pilihJenisKelamin">Jenis
-                                                            Kelamin</label>
-                                                        <select
-                                                            class="custom-select mr-sm-2 @error('jk') is-invalid @enderror"
-                                                            name="jk" id="pilihJenisKelamin" required>
-                                                            <option value="">Pilih Jenis Kelamin</option>
-                                                            <option value="laki-laki"
-                                                                {{ old('jk') == 'laki-laki' ? 'selected' : '' }}>
-                                                                Laki-Laki
-                                                            </option>
-                                                            <option value="perempuan"
-                                                                {{ old('jk') == 'perempuan' ? 'selected' : '' }}?>
-                                                                Perempuan
-                                                            </option>
-                                                        </select>
-                                                        @error('jk')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <!-- pilihan jurusan -->
-                                                    <div class="form-group ">
-                                                        <label class="text-center" for="pilihJurusan">Jurusan</label>
-                                                        <select class="custom-select mr-sm-2 r" name="jurusan_id"
-                                                            required>
-                                                            <option value="">Pilih Jurusan</option>
-                                                            @foreach ($jurusans as $jurusan)
-                                                                <option value="{{ $jurusan->id }}"
-                                                                    {{ old('jurusan_id') == $jurusan->id ? 'selected' : '' }}>
-                                                                    {{ $jurusan->nama }}
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Gelombang</label>
+                                                            <input type="hidden" name="gelombang_id"
+                                                                value="{{ $informasi->gelombang_id }}">
+                                                            <select class="custom-select" disabled>
+                                                                <option>
+                                                                    Gelombang {{ $informasi->gelombang->nomor }} -
+                                                                    {{ $informasi->gelombang->tahun_akademik }}
                                                                 </option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('jurusan_id')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                                            </select>
+                                                        </div>
 
-                                                <div class="col-md-6">
-                                                    <!-- pilihan Kelas -->
-                                                    <div class="form-group ">
-                                                        <label class="text-center" for="pilihKelas">Kelas</label>
-                                                        <select
-                                                            class="custom-select mr-sm-2 @error('kelas_id') is-invalid @enderror"
-                                                            name="kelas_id" id="pilihKelas" required>
-                                                            <option value="">Pilih Kelas</option>
-                                                            @foreach ($kelass as $kelas)
-                                                                <option value="{{ $kelas->id }}"
-                                                                    {{ old('kelas_id') == $kelas->id ? 'selected' : '' }}>
-                                                                    {{ $kelas->nama }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('kelas_id')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <!-- pilihan Kelancaran -->
-                                                    <div class="form-group ">
-                                                        <label class="text-center" for="pilihKelancaran">Kelancaran
-                                                            Mengaji</label>
-                                                        <select
-                                                            class="custom-select mr-sm-2 @error('kelancaran_mengaji') is-invalid @enderror"
-                                                            name="kelancaran_mengaji" id="pilihKelancaran" required>
-                                                            <option value="">Pilih Kelancaran</option>
-                                                            <option value="Lancar"
-                                                                {{ old('kelancaran_mengaji') == 'Lancar' ? 'selected' : '' }}>
-                                                                Lancar</option>
-                                                            <option value="Terbata Bata"
-                                                                {{ old('kelancaran_mengaji') == 'Terbata Bata' ? 'selected' : '' }}>
-                                                                Terbata Bata</option>
-                                                            <option value="Tidak Bisa Membaca"
-                                                                {{ old('kelancaran_mengaji') == 'Tidak Bisa Membaca' ? 'selected' : '' }}>
-                                                                Tidak Bisa Membaca</option>
-                                                        </select>
-                                                        @error('kelancaran_mengaji')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="jadwal">Upload Gambar Jadwal Kuliah
-                                                            <small class="text-danger">(jpg,jpeg,gif,png')</small>
-                                                        </label><br>
-                                                        <input type="file" accept="image/*" name="jadwal_kuliah"
-                                                            class="form-control @error('jadwal_kuliah') is-invalid @enderror"
-                                                            value="{{ old('jadwal_kuliah') }}" required>
-                                                        @error('jadwal_kuliah')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                                        <div class="col-md-6">
+                                                            <label>Nama Dosen</label>
+                                                            <select name="dosen_id"
+                                                                class="custom-select @error('dosen_id') is-invalid @enderror"
+                                                                required>
+                                                                <option value="">Pilih Dosen</option>
+                                                                @foreach ($dosens as $dosen)
+                                                                    <option value="{{ $dosen->id }}"
+                                                                        {{ old('dosen_id') == $dosen->id ? 'selected' : '' }}>
+                                                                        {{ $dosen->nama }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary btn-user  mt-2">
-                                                <strong><i class="fa fa-paper-plane"></i> Submit Data
-                                                    Pendaftaran</strong>
-                                            </button>
-                                            <hr>
+
+                                            {{-- ================= DATA PRIBADI ================= --}}
+                                            <div class="card card-outline card-success mb-3">
+                                                <div class="card-header">
+                                                    <strong>👤 Data Pribadi</strong>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>NPM</label>
+                                                            <input type="text" name="npm"
+                                                                class="form-control @error('npm') is-invalid @enderror"
+                                                                value="{{ old('npm') }}" required>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label>Nama Lengkap</label>
+                                                            <input type="text" name="nama"
+                                                                class="form-control @error('nama') is-invalid @enderror"
+                                                                value="{{ old('nama') }}" required>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label>Nomor WhatsApp</label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">+62</span>
+                                                                </div>
+                                                                <input type="number" name="nomor_wa"
+                                                                    class="form-control @error('nomor_wa') is-invalid @enderror"
+                                                                    placeholder="8xxxxxxxxx"
+                                                                    value="{{ old('nomor_wa') }}" required>
+                                                            </div>
+                                                            @error('nomor_wa')
+                                                                <div class="invalid-feedback d-block">{{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+
+
+                                                        <div class="col-md-6">
+                                                            <label>Jenis Kelamin</label>
+                                                            <select name="jk"
+                                                                class="custom-select @error('jk') is-invalid @enderror"
+                                                                required>
+                                                                <option value="">Pilih</option>
+                                                                <option value="laki-laki"
+                                                                    {{ old('jk') == 'laki-laki' ? 'selected' : '' }}>
+                                                                    Laki-laki</option>
+                                                                <option value="perempuan"
+                                                                    {{ old('jk') == 'perempuan' ? 'selected' : '' }}>
+                                                                    Perempuan</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- ================= DATA TAMBAHAN ================= --}}
+                                            <div class="card card-outline card-warning mb-4">
+                                                <div class="card-header">
+                                                    <strong>📂 Data Tambahan</strong>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Jurusan</label>
+                                                            <select name="jurusan_id" class="custom-select" required>
+                                                                <option value="">Pilih Jurusan</option>
+                                                                @foreach ($jurusans as $jurusan)
+                                                                    <option value="{{ $jurusan->id }}"
+                                                                        {{ old('jurusan_id') == $jurusan->id ? 'selected' : '' }}>
+                                                                        {{ $jurusan->nama }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label>Kelas</label>
+                                                            <select name="kelas_id" class="custom-select" required>
+                                                                <option value="">Pilih Kelas</option>
+                                                                @foreach ($kelass as $kelas)
+                                                                    <option value="{{ $kelas->id }}"
+                                                                        {{ old('kelas_id') == $kelas->id ? 'selected' : '' }}>
+                                                                        {{ $kelas->nama }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label>Kelancaran Mengaji</label>
+                                                            <select name="kelancaran_mengaji" class="custom-select"
+                                                                required>
+                                                                <option value="">Pilih</option>
+                                                                <option value="Lancar">Lancar</option>
+                                                                <option value="Terbata Bata">Terbata Bata</option>
+                                                                <option value="Tidak Bisa Membaca">Tidak Bisa Membaca
+                                                                </option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label>Upload Jadwal Kuliah</label>
+                                                            <input type="file" name="jadwal_kuliah"
+                                                                accept="image/*"
+                                                                class="form-control @error('jadwal_kuliah') is-invalid @enderror"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- SUBMIT --}}
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                                    <i class="fa fa-paper-plane"></i> Submit Pendaftaran
+                                                </button>
+                                            </div>
+
                                         </form>
                                     @endif
 
-
-                                    <div class="col-md-12 d-flex justify-content-md-center">
-                                        <a href="{{ route('pendaftaran.lihat') }}"
-                                            class="btn btn-success btn-icon-split float-right">
-                                            <span class="icon d-flex align-middle align-items-center">
-                                                <i class="fas fa-clipboard-list-check"></i>
-                                            </span>
-                                            <span class="text">Sudah daftar? lihat data pendaftar </span>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
+                </div>
             </div>
+
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
+
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">

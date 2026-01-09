@@ -1,103 +1,160 @@
 @extends('template.main')
+
+{{-- ================= HEADER ================= --}}
 @section('content-header')
-    <marquee behavior="Scroll " direction="left" scrollamount="10">
-        <p class="ml-auto ml-md-3 my-2 my-md-0 text-danger font-italic">Selamat Datang {{ auth()->user()->name }} - Sistem
-            Informasi Bimbingan
-            Belajar Qur'an Teknokrat. Dikelola Oleh Unit Kegiatan Mahasiswa Islam
-        </p>
-    </marquee>
-
-    <form action="" class="row">
-        @csrf
-        <span class="mt-1 ml-2">Gelombang</span>
-        <div class="col-sm-1 mb-1">
-            <select name="nomor" id="nomor" class="form-control">
-                <option value="">pilih </option>
-                <option {{ $gelombang_selected->nomor == '1' ? 'selected' : '' }}>1</option>
-                <option {{ $gelombang_selected->nomor == '2' ? 'selected' : '' }}>2</option>
-                <option {{ $gelombang_selected->nomor == '3' ? 'selected' : '' }}>3</option>
-            </select>
-        </div>
-        <div class="col-sm-3 mb-1">
-            <select name="ta" id="ta" class="form-control">
-                <option value="">pilih </option>
-                @foreach ($tahuns as $tahun)
-                    <option {{ $gelombang_selected->tahun_akademik == $tahun->tahun_akademik ? 'selected' : '' }}>
-                        {{ $tahun->tahun_akademik }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-sm-3">
-            <button type="submit" class="btn btn-info"><i class="fa fa-filter"></i> filter</button>
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8">
+            <div class="bg-transparent rounded px-3 py-2 shadow-none">
+                <marquee direction="left" scrollamount="6">
+                    <span class="text-muted font-italic">
+                        Selamat Datang <strong>{{ auth()->user()->name }}</strong> —
+                        Sistem Informasi Bimbingan Belajar Qur'an Teknokrat
+                        <span class="text-secondary">(UKMI Ar-Rahman)</span>
+                    </span>
+                </marquee>
+            </div>
         </div>
 
-    </form>
+        <div class="col-md-4">
+            {{-- FILTER --}}
+            <form action="" class="row align-items-end">
+                @csrf
+                <div class="col-4">
+                    <label class="mb-1 text-sm">Gelombang</label>
+                    <select name="nomor" class="form-control form-control-sm">
+                        <option value="">Pilih</option>
+                        <option {{ $gelombang_selected->nomor == '1' ? 'selected' : '' }}>1</option>
+                        <option {{ $gelombang_selected->nomor == '2' ? 'selected' : '' }}>2</option>
+                        <option {{ $gelombang_selected->nomor == '3' ? 'selected' : '' }}>3</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label class="mb-1 text-sm">Tahun</label>
+                    <select name="ta" class="form-control form-control-sm">
+                        <option value="">Pilih</option>
+                        @foreach ($tahuns as $tahun)
+                            <option {{ $gelombang_selected->tahun_akademik == $tahun->tahun_akademik ? 'selected' : '' }}>
+                                {{ $tahun->tahun_akademik }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-info btn-sm btn-block">
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
-@section('content')
-    <!-- Default box -->
 
-    <div class="callout callout-info info-box p-3 pl-3">
-        <i class="fa fa-calendar-alt fa-4x text-primary"></i>
-        <div class="info-box-content ">
-            <h3 class="info-box-number mb-0">Jadwal BBQ</h3>
-            <h4 class="info-box-text ">Gelombang : {{ $gelombang_selected->nomor }} -
-                {{ $gelombang_selected->tahun_akademik }}</h4>
+
+{{-- ================= CONTENT ================= --}}
+@section('content')
+
+    {{-- INFO UTAMA --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="info-box bg-light shadow-sm">
+                <span class="info-box-icon bg-info">
+                    <i class="fa fa-calendar-alt"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Jadwal BBQ Aktif</span>
+                    <span class="info-box-number">
+                        Gelombang {{ $gelombang_selected->nomor }}
+                        <small class="text-muted">({{ $gelombang_selected->tahun_akademik }})</small>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        @if ($kelompoks->isEmpty())
-            <div class="col-md-12">
-                <div class="jumbotron jumbotron-fluid">
-                    <div class="container text-danger">
-                        <h1 class="display-4"><i class="fas fa-exclamation-triangle"></i> Afwan</h1>
-                        <p class="lead">Antum belum diberikan kelompok BBQ di semester ini. </p>
-                        <p>Mohon tunggu informasi selanjutnya.</p>
-                    </div>
+    {{-- RINGKASAN --}}
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $kelompoks->count() }}</h3>
+                    <p>Kelompok Dibimbing</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users"></i>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ auth()->user()->role ?? 'Tutor' }} {{ $tutor->jenis_kelamin }}</h3>
+                    <p>{{ $tutor->name }}</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-user-check"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ now()->format('d M Y') }}</h3>
+                    <p>Tanggal Hari Ini</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-clock"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- KONTEN UTAMA --}}
+    <div class="row">
+
+        {{-- JIKA BELUM ADA KELOMPOK --}}
+        @if ($kelompoks->isEmpty())
+            <div class="col-md-12">
+                <div class="callout callout-warning">
+                    <h5>
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Belum Ada Kelompok
+                    </h5>
+                    <p class="mb-1">
+                        Antum belum mendapatkan kelompok BBQ pada gelombang ini.
+                    </p>
+                    <small class="text-muted">
+                        Penugasan kelompok dilakukan oleh panitia. Silakan menunggu informasi selanjutnya.
+                    </small>
+                </div>
+            </div>
+
+            {{-- JIKA ADA KELOMPOK --}}
         @else
             @php
-                $colors = [
-                    'bg-primary',
-                    'bg-success',
-                    'bg-info',
-                    'bg-warning',
-                    'bg-danger',
-                    'bg-secondary',
-                    'bg-light',
-                    'bg-dark',
-                    'bg-navy',
-                    'bg-indigo',
-                    'bg-purple',
-                    'bg-pink',
-                    'bg-orange',
-                    'bg-teal',
-                    'bg-olive',
-                ];
+                $colors = ['bg-primary', 'bg-success', 'bg-info', 'bg-warning', 'bg-danger', 'bg-navy'];
             @endphp
+
             @foreach ($kelompoks as $jadwal)
-                @php
-                    // Ambil warna secara acak
-                    $randomColor = $colors[array_rand($colors)];
-                @endphp
-                <div class="col-lg-3 col-xs-6">
+                @php $randomColor = $colors[array_rand($colors)]; @endphp
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="small-box {{ $randomColor }}">
                         <div class="inner">
-                            <h3>{{ $jadwal->waktu->hari }}</h3>
-                            <p>{{ $jadwal->waktu->jam }}</p>
+                            <h4 class="mb-1">{{ $jadwal->waktu->hari }}</h4>
+                            <p class="mb-0">{{ $jadwal->waktu->jam }}</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-users-cog "></i>
+                            <i class="fa fa-users-cog"></i>
                         </div>
-                        <a href="{{ route('tutor.jadwal.show', $jadwal->id) }}" class="small-box-footer">Kelola
-                            Kelompok <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('tutor.jadwal.show', $jadwal->id) }}" class="small-box-footer">
+                            Kelola Kelompok <i class="fa fa-arrow-circle-right"></i>
+                        </a>
                     </div>
                 </div>
             @endforeach
         @endif
-
     </div>
 
-    <!-- /.card -->
 @endsection

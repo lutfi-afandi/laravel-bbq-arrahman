@@ -38,62 +38,103 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table table-striped table-sm text-nowrap" id="data-table">
+                <table class="table table-striped table-sm" id="data-table">
                     <thead class="bg-gradient-success">
                         <tr>
                             <th class="text-center">#</th>
                             <th>Kelompok</th>
-                            <th>Pertemuan Ke</th>
-                            <th>Tanggal </th>
-                            <th>Peserta</th>
-                            <th>Hadir</th>
-                            <th>Izin</th>
-                            <th>Absen</th>
-                            <th>Materi</th>
-                            <th>Keterangan</th>
-                            <th>Foto</th>
-                            <th>Aksi</th>
+                            <th>Pertemuan</th>
+                            <th>Statistik</th>
+                            <th>Materi & Catatan</th>
+                            <th class="text-center">Foto</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="">
+                    <tbody>
                         @foreach ($laporans as $laporan)
                             <tr>
-                                <th>{{ $loop->iteration }}</th>
-                                <td> <span class="text-primary font-weight-bold">{{ $laporan->jadwal->tutor->name }}</span>
-                                    <span class="font-italic"> - [{{ $laporan->jadwal->waktu->hari }},
-                                        {{ $laporan->jadwal->waktu->jam }}]</span>
-                                </td>
-                                <td>{{ $laporan->no_pertemuan }}</td>
-                                <td>{{ indoDateFull($laporan->tanggal) }}</td>
-                                <td>{{ $laporan->jumlah_peserta }}</td>
-                                <td>{{ $laporan->hadir }}</td>
-                                <td>{{ $laporan->izin }}</td>
-                                <td>{{ $laporan->absen }}</td>
-                                <td>{{ $laporan->materi }}</td>
-                                <td>{{ $laporan->keterangan }}</td>
+                                <!-- NO -->
+                                <th class="text-center">{{ $loop->iteration }}</th>
 
+                                <!-- KELOMPOK -->
                                 <td>
-                                    <a class="btn btn-xs btn-warning" target="_blank"
-                                        href="{{ asset('storage/' . $laporan->foto) }}"><i class=" fa fa-file-image"></i>
-                                    </a>
+                                    <div class="font-weight-bold text-primary">
+                                        <i class="fas fa-user-tie mr-1"></i>
+                                        {{ $laporan->jadwal->tutor->name }}
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="far fa-clock"></i>
+                                        {{ $laporan->jadwal->waktu->hari }},
+                                        {{ $laporan->jadwal->waktu->jam }}
+                                    </div>
                                 </td>
+
+                                <!-- PERTEMUAN + TANGGAL -->
                                 <td>
+                                    <span class="badge badge-info d-inline-block mb-1">
+                                        Ke-{{ $laporan->no_pertemuan }}
+                                    </span>
+                                    <div class="text-muted small">
+                                        <i class="far fa-calendar"></i>
+                                        {{ indoDateFull($laporan->tanggal) }}
+                                    </div>
+                                </td>
+
+                                <!-- STATISTIK -->
+                                <td>
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-users"></i> {{ $laporan->jumlah_peserta }}
+                                    </span>
+                                    <span class="badge badge-success">
+                                        H {{ $laporan->hadir }}
+                                    </span>
+                                    <span class="badge badge-warning">
+                                        I {{ $laporan->izin }}
+                                    </span>
+                                    <span class="badge badge-danger">
+                                        A {{ $laporan->absen }}
+                                    </span>
+                                </td>
+
+                                <!-- MATERI & KETERANGAN -->
+                                <td style="max-width: 220px;">
+                                    <div class="font-weight-bold">
+                                        {{ $laporan->materi }}
+                                    </div>
+                                    <div class="text-muted small text-wrap">
+                                        {{ $laporan->keterangan ?: '-' }}
+                                    </div>
+                                </td>
+
+                                <!-- FOTO -->
+                                <td class="text-center">
+                                    @if ($laporan->foto)
+                                        <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
+                                            class="btn btn-xs btn-warning" title="Lihat Foto">
+                                            <i class="fa fa-image"></i>
+                                        </a>
+                                    @else
+                                        <span class="text-muted small">—</span>
+                                    @endif
+                                </td>
+
+                                <!-- AKSI -->
+                                <td class="text-center">
                                     <form action="{{ route('tutor.laporan.destroy', $laporan->id) }}" method="POST"
-                                        class="form-delete d-inline">
+                                        class="d-inline form-delete">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs btn-delete-laporan"
-                                            data-id="{{ $laporan->id }}">
+                                            title="Hapus Laporan">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
-
-
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

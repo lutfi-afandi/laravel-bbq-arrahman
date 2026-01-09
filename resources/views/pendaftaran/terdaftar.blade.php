@@ -20,6 +20,12 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('template_lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('template_lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
         <!-- Navbar -->
@@ -64,17 +70,15 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-sm table-striped " id="example1">
+                                        <table class="table table-sm table-striped " id="data-pendaftar">
                                             <thead>
                                                 <tr class="bg-maroon">
                                                     <th scope="col">#</th>
-                                                    <th class="th-sm">NPM</th>
                                                     <th class="th-sm">Nama Lengkap</th>
                                                     <th class="th-sm">Kelas</th>
                                                     <th class="th-sm">Kelancaran</th>
                                                     <th class="th-sm">Jenis Kelamin</th>
                                                     <th>Gelombang</th>
-                                                    <th class="th-sm">Nama Tutor</th>
                                                     <th class="th-sm">Jadwal BBQ</th>
                                                 </tr>
                                             </thead>
@@ -82,16 +86,28 @@
                                                 @foreach ($mahasiswas as $mahasiswa)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $mahasiswa->npm }}</td>
-                                                        <td>{{ $mahasiswa->nama }}</td>
+                                                        <td>
+                                                            <span class="d-block font-weight-bold">
+                                                                {{ $mahasiswa->nama }}
+                                                            </span>
+                                                            <span class="d-block text-muted small">
+                                                                NPM: {{ $mahasiswa->npm }}
+                                                            </span>
+                                                        </td>
                                                         <td>{{ $mahasiswa->jurusan->kode . ' - ' . $mahasiswa->kelas->nama }}
                                                         <td>{{ $mahasiswa->kelancaran_mengaji }}
                                                         <td>{{ ucwords($mahasiswa->jk) }}
-                                                        <td>{{ $mahasiswa->gelombang->nomor }}
-                                                        <td>{{ $mahasiswa->kelompok->jadwal->tutor->name ?? '' }}
+                                                        <td>{{ $mahasiswa->gelombang->tahun_akademik . '-' . $mahasiswa->gelombang->nomor }}
+
                                                         <td>
-                                                            {{ $mahasiswa->kelompok->jadwal->waktu->hari ?? '' }},
-                                                            {{ $mahasiswa->kelompok->jadwal->waktu->jam ?? '' }}
+                                                            <span class="d-block fw-semibold">
+                                                                Tutor:
+                                                                {{ $mahasiswa->kelompok->jadwal->tutor->name ?? '' }}
+                                                            </span>
+                                                            <span class="d-block text-muted small">
+                                                                {{ $mahasiswa->kelompok->jadwal->waktu->hari ?? '' }}:
+                                                                {{ $mahasiswa->kelompok->jadwal->waktu->jam ?? '' }}
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -141,14 +157,31 @@
     <!-- page script -->
     <script>
         $(function() {
-            $('#example1').DataTable()
+            $('#data-pendaftar').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    emptyTable: "Belum ada data pendaftar",
+                    "search": "", // hilangkan label search
+                    "searchPlaceholder": "Cari...", // placeholder di input search
+                    lengthMenu: "Tampil _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    paginate: {
+                        previous: "Sebelumnya",
+                        next: "Berikutnya"
+                    }
+                }
+            });
+
+
             $('#example').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,
                 'ordering': true,
                 'info': true,
-                'autoWidth': false
+                'autoWidth': false,
+                'booststrap4': true
             })
         })
     </script>

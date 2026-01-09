@@ -63,6 +63,7 @@
                 font-weight: bolder;
                 color: aliceblue;
             }
+
         }
     </style>
 </head>
@@ -121,8 +122,8 @@
             <h3 class="p-jum" data-aos="zoom-in" data-aos-duration="1500">Gelombang
                 {{ $informasi->gelombang->nomor . ' - ' . $informasi->gelombang->tahun_akademik }}
             </h3>
-            <a href="/pendaftaran" class="btn btn-primary hover rounded-pill mt-3" data-aos="fade-up"
-                data-aos-duration="2000">Daftar Sekarang!</a>
+            <a href="/pendaftaran" class="btn btn-outline-primary hover rounded-pill mt-3 btn-lg" data-aos="fade-up"
+                data-aos-duration="2000" id="btnDaftar">Daftar Sekarang!</a>
         </div>
     </div>
 
@@ -165,10 +166,11 @@
     <!-- INFO Pendaftaran -->
     <div class="info bg-light pt-2">
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
+            <div class="row d-flex justify-content-center  mt-3 ">
                 <h4 class="p-info font-weight-bold" id="info" data-aos="fade-up" data-aos-duration="1800">
                     Informasi Pendaftaran</h4>
             </div>
+            <hr>
             <div class="row ">
                 <div class="col-md-4" data-aos="fade-right" data-aos-duration="1800">
                     <img src="{{ asset('storage/pamflet/' . $informasi->pamflet) }}" class="img img-thumbnail">
@@ -233,7 +235,7 @@
     </div>
 
     <!-- Kegiatan -->
-    <div class="kegiatan mt-2">
+    <div class="kegiatan mt-3">
         <div class="container">
             <div class="row d-flex justify-content-center  ">
                 <h4 class="p-info mb-1 font-weight-bold" id="kegiatan" data-aos="fade-up" data-aos-duration="1800">
@@ -245,27 +247,60 @@
                 @if ($kegiatans->isEmpty())
                     <button class="btn btn-outline-primary btn-block p-4 text-xl mb-2">Kegiatan BBQ</button>
                 @else
+                    <style>
+                        .card {
+                            transition: transform 0.3s ease, box-shadow 0.3s ease;
+                        }
+
+                        .card:hover {
+                            transform: scale(1.05);
+                            /* seluruh card membesar */
+                            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+                            /* shadow lebih tebal */
+                        }
+
+                        .card-img-top {
+                            transition: transform 0.3s ease;
+                        }
+
+                        .card:hover .card-img-top {
+                            transform: scale(1.03);
+                            /* gambar ikut sedikit membesar, tapi lebih halus dari card */
+                        }
+
+                        .card-title {
+                            color: #1e3a8a;
+                            /* biru keren */
+                        }
+
+                        .toggle-text {
+                            transition: color 0.2s ease;
+                        }
+
+                        .toggle-text:hover {
+                            color: #f1f8fc;
+                            /* biru lebih terang saat hover */
+                            text-decoration: underline;
+                        }
+                    </style>
                     @foreach ($kegiatans as $kegiatan)
-                        <div class="col-md-4">
-                            <div class="card" data-aos="fade-up" data-aos-duration="2000">
-                                <img src="{{ asset('storage/kegiatan/' . $kegiatan->foto) }}" class="card-img-top"
-                                    alt="">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <h4>{{ $kegiatan->nama_kegiatan }}</h4>
-                                    </h5>
-                                    <p class="card-text">
-                                        {{-- teks pendek --}}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm border-0 rounded-lg hover-shadow" data-aos="fade-up"
+                                data-aos-duration="2000">
+                                <img src="{{ asset('storage/kegiatan/' . $kegiatan->foto) }}"
+                                    class="card-img-top rounded-top-lg" alt="">
+                                <div class="card-body d-flex flex-column">
+                                    <h4 class="card-title fw-bold">{{ $kegiatan->nama_kegiatan }}</h4>
+                                    <p class="card-text flex-grow-1">
                                         <span class="short-text">
                                             {{ Str::limit($kegiatan->deskripsi, 100, '...') }}
                                         </span>
-
-                                        {{-- teks full, disembunyikan dulu --}}
                                         <span class="full-text d-none">
                                             {{ $kegiatan->deskripsi }}
                                         </span>
                                     </p>
-                                    <a href="javascript:void(0)" class="toggle-text btn btn-link p-0">
+                                    <a href="javascript:void(0)"
+                                        class="toggle-text btn btn-sm btn-outline-primary mt-2 align-self-start">
                                         Baca lengkap
                                     </a>
                                 </div>
@@ -283,90 +318,248 @@
     <!-- kontak -->
     <div class="kontak bg-light  pt-2">
         <div class="container">
-            <div class="row d-flex justify-content-center  ">
+            <div class="row d-flex justify-content-center my-3 ">
                 <h4 class="p-info font-weight-bold" id="kontak" data-aos="zoom-in" data-aos-duration="2000">
                     Kontak</h4>
             </div>
+            <hr>
+
             <div class="row d-flex justify-content-center">
+                {{-- WA --}}
+                <style>
+                    /* contact card modern */
+                    .contact-card {
+                        text-decoration: none;
+                        display: block;
+                        height: 100%;
+                    }
 
-                <div class="col-xl-3 col-md-6 mb-4" id="ig" data-aos="fade-left" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a target="_blank"
-                                            href="http://wa.me/62{{ $informasi->cp1 }}" id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">{{ $informasi->nama_cp1 }}</a>
+                    .contact-card .card {
+                        border-radius: 16px;
+                        transition: all 0.35s ease;
+                        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+                    }
+
+                    .contact-card:hover .card {
+                        transform: scale(1.04);
+                        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+                    }
+
+                    /* icon circle */
+                    .icon-wrap {
+                        width: 52px;
+                        height: 52px;
+                        background: rgba(40, 167, 69, 0.12);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.35s ease;
+                    }
+
+                    .icon-wrap i {
+                        font-size: 26px;
+                        color: #28a745;
+                    }
+
+                    /* hover icon animation */
+                    .contact-card:hover .icon-wrap {
+                        background: #28a745;
+                    }
+
+                    .contact-card:hover .icon-wrap i {
+                        color: #ffffff;
+                        transform: scale(1.15);
+                    }
+
+                    /* social card */
+                    .social-card {
+                        display: block;
+                        text-decoration: none;
+                    }
+
+                    .social-card .card {
+                        border-radius: 14px;
+                        transition: all 0.3s ease;
+                    }
+
+                    /* hover effect */
+                    .social-card:hover .card {
+                        transform: scale(1.035);
+                        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+                    }
+
+                    /* icon wrapper */
+                    .social-card .icon-wrap {
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    }
+
+                    /* instagram */
+                    .social-card.instagram .icon-wrap {
+                        background: rgba(225, 48, 108, 0.12);
+                    }
+
+                    .social-card.instagram i {
+                        color: #e1306c;
+                        font-size: 22px;
+                    }
+
+                    .social-card.instagram:hover .icon-wrap {
+                        background: #e1306c;
+                    }
+
+                    .social-card.instagram:hover i {
+                        color: #fff;
+                    }
+
+                    /* facebook */
+                    .social-card.facebook .icon-wrap {
+                        background: rgba(24, 119, 242, 0.12);
+                    }
+
+                    .social-card.facebook i {
+                        color: #1877f2;
+                        font-size: 22px;
+                    }
+
+                    .social-card.facebook:hover .icon-wrap {
+                        background: #1877f2;
+                    }
+
+                    .social-card.facebook:hover i {
+                        color: #fff;
+                    }
+                </style>
+
+                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-left" data-aos-duration="1800">
+                    <a href="https://wa.me/62{{ $informasi->cp1 }}" target="_blank" class="contact-card">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4">
+                                <div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <div class="h5 font-weight-bold text-dark mb-0">
+                                        {{ $informasi->nama_cp1 }}
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-whatsapp  fa-2x text-success"></i>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-whatsapp"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-4" id="ig" data-aos="fade-right" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a target="_blank"
-                                            href="http://wa.me/62{{ $informasi->cp2 }}" id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">{{ $informasi->nama_cp2 }}</a>
+                <div class="col-xl-6 col-md-6 mb-4" data-aos="fade-right" data-aos-duration="1800">
+                    <a href="https://wa.me/62{{ $informasi->cp2 }}" target="_blank" class="contact-card">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4">
+                                <div>
+                                    <div class="text-muted text-sm">WhatsApp</div>
+                                    <div class="h5 font-weight-bold text-dark mb-0">
+                                        {{ $informasi->nama_cp2 }}
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-whatsapp fa-2x text-success"></i>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-whatsapp"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-6 mb-4" id="ig" data-aos="fade-down" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a
-                                            href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
-                                            id="ig"
-                                            class="h5 mb-0 font-weight-bold text-gray-800">@arrahmanteknokrat</a></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-instagram fa-2x text-danger"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-6 mb-4" id="ig" data-aos="fade-up" data-aos-duration="1800">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><a
-                                            href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
-                                            id="ig" class="h5 mb-0 font-weight-bold text-gray-800">LDK
-                                            Ar-Rahman Teknokrat</a></div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fab fa-facebook fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
             </div>
+
+            <div class="row justify-content-center">
+
+                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-down" data-aos-duration="1800">
+                    <a href="https://www.instagram.com/arrahmanteknokrat/" target="_blank"
+                        class="social-card instagram">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Instagram</div>
+                                    <div class="font-weight-bold text-dark">
+                                        @arrahmanteknokrat
+                                    </div>
+                                </div>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-instagram"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="1800">
+                    <a href="https://web.facebook.com/ukm.arrahmanteknokrat" target="_blank"
+                        class="social-card facebook">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+                                <div>
+                                    <div class="text-muted text-sm">Facebook</div>
+                                    <div class="font-weight-bold text-dark">
+                                        LDK Ar-Rahman Teknokrat
+                                    </div>
+                                </div>
+                                <div class="icon-wrap">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
-    <footer class="d-flex justify-content-center mt-5 bg-blue-600">&copy; arrahman - 2021</footer>
+    {{-- style footer --}}
+    <style>
+        footer a {
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #cce5ff;
+            /* biru lebih terang saat hover */
+            text-decoration: none;
+        }
+
+        footer {
+            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
+            /* subtle shadow atas */
+            margin-top: 12px !important
+        }
+    </style>
+    <footer class="bg-primary text-white pt-4 pb-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Bagian kiri: copyright -->
+                <div class="col-md-6 text-center text-md-left mb-2 mb-md-0">
+                    &copy; 2021 Arrahman
+                </div>
+
+                <!-- Bagian kanan: link -->
+                <div class="col-md-6 text-center text-md-right">
+                    <a href="/pendaftaran" class="text-white mr-3">Daftar</a>
+                    <a href="/login" class="text-white mr-3">Login</a>
+                    <a href="https://api.whatsapp.com/send/?phone=6285765842510&text&type=phone_number&app_absent=0"
+                        target="_blank" class="text-white mr-3">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -388,14 +581,15 @@
             let shortText = cardBody.find('.short-text');
             let fullText = cardBody.find('.full-text');
 
+            // Toggle teks
             shortText.toggleClass('d-none');
             fullText.toggleClass('d-none');
 
-            // Ganti teks tombol
-            if ($(this).text() === "Baca lengkap") {
-                $(this).text("Tutup");
+            // Setel teks tombol berdasarkan state fullText
+            if (fullText.hasClass('d-none')) {
+                $(this).text('Baca lengkap'); // teks lengkap tersembunyi
             } else {
-                $(this).text("Baca lengkap");
+                $(this).text('Tutup'); // teks lengkap terlihat
             }
         });
     </script>

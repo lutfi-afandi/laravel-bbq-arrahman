@@ -15,92 +15,87 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-sm text-nowrap" width="100%">
-                    <thead class="bg-gradient-teal">
-                        <tr style="height:100%">
-                            <th class="align-middle" rowspan="2">NPM</th>
-                            <th class="align-middle" rowspan="2">Nama</th>
-                            <th class="align-middle text-center" colspan="8">Nilai</th>
-                            <th class="align-middle text-center" rowspan="2">⫤ NA ⫤</th>
-                            <th class="align-middle" rowspan="2">Update</th>
-                            <th class="align-middle" rowspan="2">Aksi</th>
+                <table class="table table-bordered table-sm text-nowrap" width="100%" id="data-table">
+                    <thead class="bg-gradient-teal text-center">
+                        <tr>
+                            <th rowspan="2" class="align-middle">Mahasiswa</th>
+                            <th colspan="8">Nilai</th>
+                            <th rowspan="2" class="align-middle">⫤ NA ⫤</th>
+                            <th rowspan="2" class="align-middle">Update</th>
+                            <th rowspan="2" class="align-middle">Aksi</th>
                         </tr>
-                        <tr class="text-center">
-                            <th width="80px">Kehadiran</th>
-                            <th width="80px">Mutabaah</th>
-                            <th width="100px"> ⫤ UTS ⫤</th>
-                            <th width="80px">Kegiatan</th>
-                            <th width="80px">Wudhu</th>
-                            <th width="80px">Sholat</th>
-                            <th width="80px">Tilawah</th>
-                            <th width="110px">⫤ UAS ⫤</th>
+                        <tr>
+                            <th>Kehadiran</th>
+                            <th>Mutabaah</th>
+                            <th>UTS</th>
+                            <th>Kegiatan</th>
+                            <th>Wudhu</th>
+                            <th>Sholat</th>
+                            <th>Tilawah</th>
+                            <th>UAS</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach ($kelompoks as $nilai)
-                            <form action="{{ route('tutor.nilai.update', $nilai->id) }}" method="post">
-                                @method('put')
-                                @csrf
-                                @php
-                                    $mahasiswa = $nilai->mahasiswa;
-                                @endphp
-                                <tr>
-                                    <td>{{ $mahasiswa->npm }}</td>
-                                    <td>{{ $mahasiswa->nama }}</td>
-                                    <td>
-                                        <input type="text" name="kehadiran" id="kehadiran" class="form-control"
-                                            value="{{ $nilai->kehadiran }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="mutabaah" id="mutabaah" class="form-control"
-                                            value="{{ $nilai->mutabaah }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="uts" id="uts" class="form-control"
-                                            value="{{ $nilai->uts }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="kegiatan_wajib" id="kegiatan_wajib" class="form-control"
-                                            value="{{ $nilai->kegiatan_wajib }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="wudhu" id="wudhu" class="form-control"
-                                            value="{{ $nilai->wudhu }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="sholat" id="sholat" class="form-control"
-                                            value="{{ $nilai->sholat }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="tilawah" id="tilawah" class="form-control"
-                                            value="{{ $nilai->tilawah }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="uas_tertulis" id="uas_tertulis" class="form-control"
-                                            value="{{ $nilai->uas_tertulis }}">
-                                    </td>
-                                    <td class="text-center">
-                                        <span id="nilai_akhir" class="text-bold">{{ $nilai->nilai_akhir }}
-                                            {{ $nilai->huruf_mutu ? '(' . $nilai->huruf_mutu . ')' : '' }}</span>
-                                        <input type="hidden" name="nilai_akhir" id="na" class="nilai_akhir_input"
+                            @php $mhs = $nilai->mahasiswa; @endphp
+
+                            <tr>
+                                <!-- MAHASISWA -->
+                                <td>
+                                    <div class="font-weight-bold text-primary">
+                                        {{ $mhs->nama }}
+                                    </div>
+                                    <div class="text-muted small">
+                                        {{ $mhs->npm }}
+                                    </div>
+                                </td>
+
+                                <form action="{{ route('tutor.nilai.update', $nilai->id) }}" method="post">
+                                    @method('put')
+                                    @csrf
+
+                                    @foreach (['kehadiran', 'mutabaah', 'uts', 'kegiatan_wajib', 'wudhu', 'sholat', 'tilawah', 'uas_tertulis'] as $field)
+                                        <td>
+                                            <input type="number" name="{{ $field }}"
+                                                class="form-control form-control-sm text-center" min="0"
+                                                max="100" value="{{ $nilai->$field }}">
+                                        </td>
+                                    @endforeach
+
+                                    <!-- NILAI AKHIR -->
+                                    <td class="text-center align-middle">
+                                        <span id="nilai_akhir" class="font-weight-bold text-info">
+                                            {{ $nilai->nilai_akhir }}
+                                            {{ $nilai->huruf_mutu ? '(' . $nilai->huruf_mutu . ')' : '' }}
+                                        </span>
+
+                                        <input type="hidden" name="nilai_akhir" class="nilai_akhir_input"
                                             value="{{ $nilai->nilai_akhir }}">
-                                        <input type="hidden" name="huruf_mutu" id="na" class="huruf_mutu_input"
+
+                                        <input type="hidden" name="huruf_mutu" class="huruf_mutu_input"
                                             value="{{ $nilai->huruf_mutu }}">
                                     </td>
-                                    <td>
-                                        {{ strTime($nilai->updated_nilai) ?? '' }}
-                                        <input type="hidden" name="updated_nilai" id="updated_nilai" class="form-control"
-                                            value="{{ $nilai->updated_nilai }}">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-xs bg-gradient-success" type="submit">simpan</button>
-                                    </td>
-                                </tr>
-                            </form>
-                        @endforeach
 
+
+                                    <!-- UPDATE -->
+                                    <td class="align-middle text-muted small">
+                                        {{ strTime($nilai->updated_nilai) ?? '-' }}
+                                        <input type="hidden" name="updated_nilai" value="{{ now() }}">
+                                    </td>
+
+                                    <!-- AKSI -->
+                                    <td class="align-middle text-center">
+                                        <button type="submit" class="btn btn-xs bg-gradient-success">
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
 
@@ -158,8 +153,23 @@
                     $output.text(nilai_akhir + ' (' + grade + ')');
                     $hiddenInput.val(nilai_akhir);
                     $hurufMutu.val(grade);
+
+                    $output
+                        .removeClass('text-success text-warning text-danger')
+                        .addClass(
+                            grade === 'A' ? 'text-success' :
+                            grade === 'B' ? 'text-warning' :
+                            'text-danger'
+                        )
+                        .text(nilai_akhir + ' (' + grade + ')');
+
                 }
             }
+
+            $('table tbody tr').each(function() {
+                hitungNilaiAkhir($(this));
+            });
+
 
 
             $('table tr').each(function() {

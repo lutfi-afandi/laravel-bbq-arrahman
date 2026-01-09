@@ -91,6 +91,7 @@ class LaporanController extends Controller
             'izin' => 'required|integer|min:0',
             'absen' => 'required|integer|min:0',
             'materi' => 'required|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
             'foto'     => 'required|file|mimes:jpg,jpeg,png,gif|max:512',
         ];
 
