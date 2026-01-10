@@ -1,15 +1,23 @@
-<div class="modal fade" tabindex="1" id="modal-agenda1">
-    <div class="modal-dialog  ">
-        <div class="modal-content">
-            <div class="modal-header p-1 pl-3 pr-3 bg-gradient-cyan">
-                <h4 class="modal-title  text-center">Jadwal Agenda BBQ</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
+<div class="modal fade" id="modal-agenda1" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-lg">
+
+            <!-- Header -->
+            <div class="modal-header bg-gradient-cyan py-2">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-calendar-alt mr-2"></i> Jadwal Agenda BBQ
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
             </div>
+
             <form method="post" action="{{ route('admin.informasi.agenda', $informasi->id) }}">
                 @method('put')
                 @csrf
-                <div class="modal-body">
+
+                <div class="modal-body px-4 py-3">
+
                     @php
                         $dates = [
                             'launching' => $informasi->launching,
@@ -22,21 +30,41 @@
 
                     @foreach ($dates as $key => $value)
                         <div class="form-group">
-                            <label>{{ strtoupper(str_replace('_', ' ', $key)) }}</label>
-                            <input type="text" class="form-control datepicker" name="{{ $key }}"
-                                value="{{ $value ? \Carbon\Carbon::parse($value)->format('d/m/Y') : '' }}">
+                            <label class="font-weight-bold text-uppercase small">
+                                {{ str_replace('_', ' ', $key) }}
+                            </label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white">
+                                        <i class="far fa-calendar text-info"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control datepicker" name="{{ $key }}"
+                                    value="{{ $value ? \Carbon\Carbon::parse($value)->format('d/m/Y') : '' }}"
+                                    placeholder="dd/mm/yyyy">
+                            </div>
                         </div>
                     @endforeach
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-info" type="submit"><i class="fa fa-paper-plane"></i> Update</button>
-                </div>
-            </form>
 
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                        Batal
+                    </button>
+                    <button class="btn btn-info btn-sm px-4 shadow-sm" type="submit">
+                        <i class="fas fa-save mr-1"></i> Simpan Agenda
+                    </button>
+                </div>
+
+            </form>
 
         </div>
     </div>
 </div>
+
 
 @push('css')
     <!-- Bootstrap Datepicker CSS -->

@@ -1,45 +1,95 @@
-<div class="modal fade" tabindex="1" id="modal-cp1">
-    <div class="modal-dialog  ">
-        <div class="modal-content">
-            <div class="modal-header p-1 pl-3 pr-3 bg-gradient-cyan">
-                <h4 class="modal-title  text-center">NARAHUBUNG BBQ</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
+<div class="modal fade" id="modal-cp1" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-lg">
+
+            <!-- Header -->
+            <div class="modal-header bg-gradient-cyan py-2">
+                <h5 class="modal-title font-weight-bold">
+                    <i class="fas fa-headset mr-2"></i> Narahubung BBQ
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
             </div>
+
             <form method="post" action="{{ route('admin.informasi.narahubung', $informasi->id) }}">
                 @method('put')
                 @csrf
-                <div class="modal-body">
-                    <div class="form-group ">
-                        <label for="nama_cp1">Narahubung 1/Ikhwan :</label>
-                        <input type="text" name="nama_cp1" class="form-control" value="{{ $informasi->nama_cp1 }}"
-                            placeholder="Nama CP 1/Ikhwan">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><strong class="text-success">+62</strong></div>
+
+                <div class="modal-body px-4 py-3">
+
+                    <div class="row">
+
+                        <!-- Ikhwan -->
+                        <div class="col-md-6">
+                            <div class="card border-info shadow-sm h-100">
+                                <div class="card-header bg-light font-weight-bold text-info text-center py-1">
+                                    <i class="fas fa-male mr-1"></i> Ikhwan
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <label class="small font-weight-bold">Nama Narahubung</label>
+                                        <input type="text" name="nama_cp1" class="form-control"
+                                            value="{{ $informasi->nama_cp1 }}" placeholder="Nama CP Ikhwan">
+                                    </div>
+
+                                    <label class="small font-weight-bold">Nomor WhatsApp</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-success font-weight-bold">+62</span>
+                                        </div>
+                                        <input type="number" name="cp1" class="form-control" placeholder="8xxxxxxx"
+                                            value="{{ $informasi->cp1 }}">
+                                    </div>
+
+                                </div>
                             </div>
-                            <input type="number" name="cp1" class="form-control" id="inlineFormInputGroup"
-                                placeholder="8xxxxxx" value="{{ $informasi->cp1 }}">
                         </div>
-                    </div>
-                    <div class="form-group ">
-                        <label for="nama_cp1">Narahubung 2/Akhwat :</label>
-                        <input type="text" name="nama_cp2" class="form-control" value="{{ $informasi->nama_cp2 }}"
-                            placeholder="Nama CP 2/Akhwat">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><strong class="text-success">+62</strong></div>
+
+                        <!-- Akhwat -->
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <div class="card border-pink shadow-sm h-100">
+                                <div class="card-header bg-light font-weight-bold text-pink text-center py-1">
+                                    <i class="fas fa-female mr-1"></i> Akhwat
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <label class="small font-weight-bold">Nama Narahubung</label>
+                                        <input type="text" name="nama_cp2" class="form-control"
+                                            value="{{ $informasi->nama_cp2 }}" placeholder="Nama CP Akhwat">
+                                    </div>
+
+                                    <label class="small font-weight-bold">Nomor WhatsApp</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-success font-weight-bold">+62</span>
+                                        </div>
+                                        <input type="number" name="cp2" class="form-control" placeholder="8xxxxxxx"
+                                            value="{{ $informasi->cp2 }}">
+                                    </div>
+
+                                </div>
                             </div>
-                            <input type="number" name="cp2" class="form-control" id="inlineFormInputGroup"
-                                placeholder="8xxxxxx" value="{{ $informasi->cp2 }}">
                         </div>
+
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-info " type="submit"><i class="fa fa-paper-plane"></i> Update</button>
+
+                <!-- Footer -->
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                        Batal
+                    </button>
+                    <button class="btn btn-info btn-sm px-4 shadow-sm" type="submit">
+                        <i class="fas fa-save mr-1"></i> Simpan
+                    </button>
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>

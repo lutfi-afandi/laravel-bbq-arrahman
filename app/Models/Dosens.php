@@ -9,6 +9,12 @@ class Dosens extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $table = 'dosens';
+    protected $fillable = [
+        'kode',
+        'nama',
+        'foto'
+    ];
 
     public function mahasiswa()
     {

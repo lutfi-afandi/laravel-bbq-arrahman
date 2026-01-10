@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CetakController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\InformasiController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\KegiatanController;
@@ -30,6 +31,8 @@ Route::middleware(['is_admin'])->group(function () {
     Route::resource('/admin/jadwal', JadwalController::class)->names('admin.jadwal');
 
     Route::resource('/admin/kelompok', KelompokController::class)->names('admin.kelompok');
+
+    Route::resource('/admin/dosen', DosenController::class)->names('admin.dosen');
 
     Route::put('/admin/informasi-status/{id}', [InformasiController::class, 'status'])->name('admin.informasi.status');
     Route::put('/admin/informasi-masa/{id}', [InformasiController::class, 'masa'])->name('admin.informasi.masa');

@@ -1,58 +1,86 @@
-<div class="modal fade" tabindex="1" id="modal-masa">
-    <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
-            <div class="modal-header p-1 pl-3 pr-3 bg-gradient-teal">
-                <h4 class="modal-title  text-center">TIMELINE PENDAFTARAN</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
+<div class="modal fade" id="modal-masa" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-lg">
+
+            <!-- HEADER -->
+            <div class="modal-header bg-gradient-teal py-2">
+                <h5 class="modal-title text-white">
+                    <i class="fas fa-stream mr-2"></i> Timeline Pendaftaran
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
             </div>
+
             <form method="post" action="{{ route('admin.informasi.masa', $informasi->id) }}">
                 @method('put')
                 @csrf
-                <div class="modal-body">
+
+                <!-- BODY -->
+                <div class="modal-body px-4 py-3">
+
+                    <!-- Gelombang -->
                     <div class="form-group">
-                        <label for="">Gelombang</label>
-                        <select name="nomor" id="nomor" class="form-control">
-                            <option value="1" {{ $informasi->gelombang->nomor == '1' ? 'selected' : '' }}>1
-                            </option>
-                            <option value="2" {{ $informasi->gelombang->nomor == '2' ? 'selected' : '' }}>2
-                            </option>
-                            <option value="3" {{ $informasi->gelombang->nomor == '3' ? 'selected' : '' }}>3
-                            </option>
+                        <label class="font-weight-bold">Gelombang Pendaftaran</label>
+                        <select name="nomor" class="form-control">
+                            <option value="1" {{ $informasi->gelombang->nomor == '1' ? 'selected' : '' }}>Gelombang
+                                1</option>
+                            <option value="2" {{ $informasi->gelombang->nomor == '2' ? 'selected' : '' }}>Gelombang
+                                2</option>
+                            <option value="3" {{ $informasi->gelombang->nomor == '3' ? 'selected' : '' }}>Gelombang
+                                3</option>
                         </select>
                     </div>
+
+                    <!-- Tahun Ajar -->
                     <div class="form-group">
-                        <label for="">Tahun Ajaran</label>
-                        <select name="tahun_akademik" id="tahun_akademik" class="form-control select2bs4">
-                            <option value="">Pilih Tahun Ajar</option>
+                        <label class="font-weight-bold">Tahun Akademik</label>
+                        <select name="tahun_akademik" class="form-control select2bs4">
+                            <option value="">Pilih Tahun Ajaran</option>
                             @foreach ($tahuns as $tahun)
                                 <option value="{{ $tahun->tahun_akademik }}"
                                     {{ $tahun->tahun_akademik == $informasi->gelombang->tahun_akademik ? 'selected' : '' }}>
-                                    {{ $tahun->tahun_akademik }}</option>
+                                    {{ $tahun->tahun_akademik }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
+
+                    <!-- Masa Pendaftaran -->
+                    @php
+                        use Carbon\Carbon;
+                        $mulai_daftar = Carbon::parse($informasi->mulai_daftar)->format('d/m/Y');
+                        $akhir_daftar = Carbon::parse($informasi->akhir_daftar)->format('d/m/Y');
+                    @endphp
+
                     <div class="form-group">
-                        @php
-                            use Carbon\Carbon;
-                            $mulai_daftar = Carbon::parse($informasi->mulai_daftar)->format('d/m/Y');
-                            $akhir_daftar = Carbon::parse($informasi->akhir_daftar)->format('d/m/Y');
-                        @endphp
-                        <label for="">Masa Pendaftaran </label>
+                        <label class="font-weight-bold">Masa Pendaftaran</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
+                                <span class="input-group-text bg-white">
+                                    <i class="far fa-calendar-alt text-info"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control float-right" name="masa_daftar" id="masa_daftar"
+                            <input type="text" class="form-control" name="masa_daftar" id="masa_daftar"
                                 value="{{ $mulai_daftar }} - {{ $akhir_daftar }}">
                         </div>
+                        <small class="text-muted mt-1 d-block">
+                            Tentukan rentang waktu dibukanya pendaftaran
+                        </small>
                     </div>
+
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-info " type="submit">Update</button>
+
+                <!-- FOOTER -->
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                        Batal
+                    </button>
+                    <button type="submit" class="btn btn-info btn-sm px-4 shadow-sm">
+                        <i class="fas fa-save mr-1"></i> Simpan Perubahan
+                    </button>
                 </div>
+
             </form>
         </div>
     </div>

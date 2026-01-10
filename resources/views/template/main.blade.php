@@ -62,6 +62,18 @@
             background: linear-gradient(135deg, #dc3545, #ff6b6b);
             border: none;
         }
+
+        .bg-warning,
+        .btn-warning,
+        .bg-gradient-yellow {
+            color: #fff !important;
+        }
+
+        .bg-warning *,
+        .btn-warning *,
+        .bg-gradient-yellow * {
+            color: #fff !important;
+        }
     </style>
     @stack('css')
 </head>

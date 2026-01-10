@@ -60,8 +60,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-header">Kelola</li>
-
+                    <li class="nav-header">Master</li>
                     <li class="nav-item">
                         <a href="{{ route('admin.tutor.index') }}"
                             class="nav-link {{ request()->is('admin/tutor') ? 'active' : '' }}">
@@ -69,6 +68,15 @@
                             <p>Tutor</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.dosen.index') }}"
+                            class="nav-link {{ request()->is('admin/dosen') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-tie"></i>
+                            <p>Dosen</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">Kelola</li>
 
                     <li class="nav-item">
                         <a href="{{ route('admin.jadwal.index') }}"
