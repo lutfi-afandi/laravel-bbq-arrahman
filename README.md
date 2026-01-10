@@ -132,13 +132,13 @@ Berikut adalah beberapa tampilan antarmuka dari aplikasi **Laravel BBQ New**:
 | :-----------------------------------------: |
 | ![Halaman Depan](public/img/ss/landing.png) |
 
-|               Halaman Login                |                   Dashboard Admin                    |                  Jadwal                  |
-| :----------------------------------------: | :--------------------------------------------------: | :--------------------------------------: |
-| ![Halaman Loogin](public/img/ss/login.png) | ![Dashboard Admin](public/img/ss/admin-dasboard.png) | [Jadwal](public/img/ss/admin-jadwal.png) |
+|               Halaman Login                |                   Dashboard Admin                    |                  Jadwal                   |
+| :----------------------------------------: | :--------------------------------------------------: | :---------------------------------------: |
+| ![Halaman Loogin](public/img/ss/login.png) | ![Dashboard Admin](public/img/ss/admin-dasboard.png) | ![Jadwal](public/img/ss/admin-jadwal.png) |
 
-|                   Peserta                   |                 KBM                 |                 Informasi                 |
-| :-----------------------------------------: | :---------------------------------: | :---------------------------------------: |
-| ![Peserta](public/img/ss/admin-peserta.png) | ![KBM](public/img/ss/admin-kbm.png) | [Informasi](public/img/ss/admin-info.png) |
+|                   Peserta                   |                 KBM                 |                 Informasi                  |
+| :-----------------------------------------: | :---------------------------------: | :----------------------------------------: |
+| ![Peserta](public/img/ss/admin-peserta.png) | ![KBM](public/img/ss/admin-kbm.png) | ![Informasi](public/img/ss/admin-info.png) |
 
 |                    Dashboard Tutor                    |                     Dashboard Peserta                     |
 | :---------------------------------------------------: | :-------------------------------------------------------: |
