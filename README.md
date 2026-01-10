@@ -132,6 +132,22 @@ Aplikasi ini berbasis Web, bukan REST API, sehingga interaksi dilakukan melalui 
 📌 Lisensi
 Project ini dibuat untuk kebutuhan internal/pembelajaran. Silakan disesuaikan dengan kebutuhan masing-masing.
 
-```
+---
 
-```
+## 📞 Kontak & Dukungan
+
+Jika Anda memiliki pertanyaan, kendala instalasi, atau ingin melakukan pengembangan lebih lanjut, silakan hubungi pengembang melalui:
+
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/6285765842510?text=Halo,%20saya%20tertarik%20dengan%20projek%20Laravel%20BBQ%20New)
+
+**WhatsApp:** [0857-6584-2510](https://wa.me/6285765842510)
+
+---
+
+### Apa yang saya tambahkan?
+
+1.  **Badge WhatsApp**: Saya menambahkan tombol visual (badge) agar terlihat lebih modern seperti repositori profesional lainnya.
+2.  **Auto-Text**: Link WhatsApp tersebut sudah saya sertakan pesan otomatis: _"Halo, saya tertarik dengan projek Laravel BBQ New"_, jadi ketika diklik, pengguna tidak perlu mengetik dari awal.
+3.  **Format Internasional**: Nomor WA sudah diubah ke format `62` (kode negara Indonesia) agar link `wa.me` berfungsi dengan benar.
+
+Apakah ada bagian lain yang ingin Anda tambahkan, seperti daftar tabel database?
