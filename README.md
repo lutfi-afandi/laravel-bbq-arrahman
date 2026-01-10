@@ -122,6 +122,22 @@ http://127.0.0.1:8000
 
 Semua route dilindungi middleware sesuai role masing-masing.
 
+---
+
+## 📸 Gallery / Screenshot
+
+Berikut adalah beberapa tampilan antarmuka dari aplikasi **Laravel BBQ New**:
+
+|                Halaman Depan                |                   Dashboard Admin                    |
+| :-----------------------------------------: | :--------------------------------------------------: |
+| ![Halaman Depan](public/img/ss/landing.png) | ![Dashboard Admin](public/img/ss/admin-dasboard.png) |
+
+|                    Dashboard Tutor                    |                     Dashboard Peserta                     |
+| :---------------------------------------------------: | :-------------------------------------------------------: |
+| ![Dashboard Tutor](public/img/ss/tutor-dashboard.png) | ![Dashboard Peserta](public/img/ss/peserta-dashboard.png) |
+
+---
+
 ⚠️ Catatan Penting
 Pastikan data referensi (kelas, jurusan, gelombang) sudah tersedia sebelum melakukan pendaftaran.
 
