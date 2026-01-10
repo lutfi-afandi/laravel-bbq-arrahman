@@ -128,9 +128,13 @@ Semua route dilindungi middleware sesuai role masing-masing.
 
 Berikut adalah beberapa tampilan antarmuka dari aplikasi **Laravel BBQ New**:
 
-|                Halaman Depan                |                   Dashboard Admin                    |
-| :-----------------------------------------: | :--------------------------------------------------: |
-| ![Halaman Depan](public/img/ss/landing.png) | ![Dashboard Admin](public/img/ss/admin-dasboard.png) |
+|                Halaman Depan                |
+| :-----------------------------------------: |
+| ![Halaman Depan](public/img/ss/landing.png) |
+
+|               Halaman Login               |                   Dashboard Admin                    |
+| :---------------------------------------: | :--------------------------------------------------: |
+| ![Halaman Depan](public/img/ss/login.png) | ![Dashboard Admin](public/img/ss/admin-dasboard.png) |
 
 |                    Dashboard Tutor                    |                     Dashboard Peserta                     |
 | :---------------------------------------------------: | :-------------------------------------------------------: |
