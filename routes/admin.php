@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\InformasiController;
 use App\Http\Controllers\Admin\JadwalController;
+use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\KelompokController;
 use App\Http\Controllers\Admin\LaporanController;
@@ -33,6 +34,11 @@ Route::middleware(['is_admin'])->group(function () {
     Route::resource('/admin/kelompok', KelompokController::class)->names('admin.kelompok');
 
     Route::resource('/admin/dosen', DosenController::class)->names('admin.dosen');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('jurusan', JurusanController::class);
+        Route::get('jurusan/show', [JurusanController::class, 'show']);
+    });
 
     Route::put('/admin/informasi-status/{id}', [InformasiController::class, 'status'])->name('admin.informasi.status');
     Route::put('/admin/informasi-masa/{id}', [InformasiController::class, 'masa'])->name('admin.informasi.masa');

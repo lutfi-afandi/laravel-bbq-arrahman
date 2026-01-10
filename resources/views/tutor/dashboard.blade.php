@@ -111,7 +111,8 @@
     </div>
 
     {{-- KONTEN UTAMA --}}
-    <div class="row">
+
+    <div class="row card mx-1 shadow-none ">
 
         {{-- JIKA BELUM ADA KELOMPOK --}}
         @if ($kelompoks->isEmpty())
@@ -139,7 +140,7 @@
             @foreach ($kelompoks as $jadwal)
                 @php $randomColor = $colors[array_rand($colors)]; @endphp
 
-                <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col-lg-3 col-md-4 col-sm-6 card-body pb-1">
                     <div class="small-box {{ $randomColor }}">
                         <div class="inner">
                             <h4 class="mb-1">{{ $jadwal->waktu->hari }}</h4>

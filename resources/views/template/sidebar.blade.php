@@ -75,6 +75,13 @@
                             <p>Dosen</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.jurusan.index') }}"
+                            class="nav-link {{ request()->is('admin/jurusan') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-building"></i>
+                            <p>Program Studi</p>
+                        </a>
+                    </li>
 
                     <li class="nav-header">Kelola</li>
 
