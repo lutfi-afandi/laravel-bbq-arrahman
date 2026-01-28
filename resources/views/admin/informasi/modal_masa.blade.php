@@ -35,7 +35,7 @@
                     <!-- Tahun Ajar -->
                     <div class="form-group">
                         <label class="font-weight-bold">Tahun Akademik</label>
-                        <select name="tahun_akademik" class="form-control select2bs4">
+                        <select name="tahun_akademik" id="tahun_akademik" class="form-control select2bs4">
                             <option value="">Pilih Tahun Ajaran</option>
                             @foreach ($tahuns as $tahun)
                                 <option value="{{ $tahun->tahun_akademik }}"
